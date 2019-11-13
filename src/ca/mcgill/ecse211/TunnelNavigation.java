@@ -9,13 +9,12 @@ public class TunnelNavigation {
      *
      * @param tunnelY: the x coordinate of the final destination
      * @param tunnelX: the y coordinate of the final destination
-     * @param isGreenTeam: Team that the robot is on, green or red.
      */
-    public static void entranceOfTunnel(double tunnelX, double tunnelY, boolean isGreenTeam) {
+    public static void entranceOfTunnel(double tunnelX, double tunnelY) {
         double currentX = odometer.getXYT()[0];
         double currentY = odometer.getXYT()[1];
-        
-        if (isGreenTeam) {
+    
+        if (greenTeam == 15) {
             //move horizontally first
             Navigation.travelTo(tunnelX, currentY);
             Navigation.travelTo(tunnelX, tunnelY);

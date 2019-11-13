@@ -2,8 +2,7 @@ package ca.mcgill.ecse211;
 
 import lejos.hardware.Button;
 
-import static ca.mcgill.ecse211.Resources.LCD;
-import static ca.mcgill.ecse211.Resources.odometer;
+import static ca.mcgill.ecse211.Resources.*;
 
 public class Main implements Runnable{
     public static void main(String[] args) {
@@ -36,21 +35,26 @@ public class Main implements Runnable{
     
     @Override
     public void run() {
-        Localization.fallingEdge();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Localization.travelUntilLineHit(45);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Localization.centralizeAtPoint(0, 0);
+
+//        Localization.fallingEdge();
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        Localization.travelUntilLineHit(45);
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        Localization.centralizeAtPoint(0, 0);
+        odometer.setXYT(1 * TILE_SIZE, 1 * TILE_SIZE, 0);
+        Navigation.travelTo(3 * TILE_SIZE, 3 * TILE_SIZE); // this should be the lower left of the tunnel (-1,-1)
+        Localization.centralizeAtPoint(3 * TILE_SIZE, 3 * TILE_SIZE);
+        
 //        TunnelNavigation.entranceOfTunnel(5,3,true);
 //        //maybe localize before?
 //        TunnelNavigation.insideTunnel(true);

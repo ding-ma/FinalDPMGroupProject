@@ -140,8 +140,7 @@ public class Localization {
         currentX = currentLocation(angleY);
         currentY = currentLocation(angleX);
     
-        // Go to origin
-        odometer.setXYT(currentX, currentY, odometer.getXYT()[2]); // updates odo with current location compared to
+        odometer.setXYT(currentX + xCoord, currentY + yCoord, odometer.getXYT()[2]); // updates odo with current location compared to
         // origin
         Navigation.travelTo(xCoord, yCoord); // make it travel to origin
     
@@ -152,15 +151,15 @@ public class Localization {
         }
         odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
         Navigation.turnTo(15);
-    
-        //todo, fix ressources for team number with wifi server
-        if (Resources.greenTeam == 15) {
-            odometer.setXYT(1 * TILE_SIZE, 8 * TILE_SIZE, 270);
-        }
-    
-        if (Resources.greenTeam != 15) {
-            odometer.setXYT(14 * TILE_SIZE, 1 * TILE_SIZE, 90);
-        }
+
+//        //todo, fix ressources for team number with wifi server
+//        if (Resources.greenTeam == 15) {
+//            odometer.setXYT(8 * TILE_SIZE, 1 * TILE_SIZE, 270);
+//        }
+//    
+//        if (Resources.greenTeam != 15) {
+//            odometer.setXYT(1 * TILE_SIZE, 14 * TILE_SIZE, 90);
+//        }
       
     }
     
