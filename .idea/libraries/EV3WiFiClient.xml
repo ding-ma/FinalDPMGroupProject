@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="EV3WiFiClient">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/EV3WiFiClient.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/EV3WiFiClient.jar!/" />
+    </SOURCES>
+  </library>
+</component>
