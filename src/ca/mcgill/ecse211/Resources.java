@@ -47,7 +47,7 @@ public class Resources {
     /**
      * The robot width in centimeters.
      */
-    public static final double TRACK = 16; // increased by .5 for lower voltage 15.1
+    public static final double TRACK = 16; // increased by .5 for lower voltage 15.1, on small test is 15.4
     
     /**
      * Lightsensor distance to the middle of track.
@@ -137,6 +137,8 @@ public class Resources {
     public static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
     
     
+    public static final EV3MediumRegulatedMotor triggerMotor =
+            new EV3MediumRegulatedMotor(LocalEV3.get().getPort("C"));
     /**
      * Left Launch motor.
      */

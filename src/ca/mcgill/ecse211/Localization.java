@@ -116,13 +116,13 @@ public class Localization {
         double currentY;
         double angleX;
         double angleY;
-        leftMotor.setSpeed(ROTATE_SPEED);
-        rightMotor.setSpeed(ROTATE_SPEED);
+        leftMotor.setSpeed(MOTOR_LOW);
+        rightMotor.setSpeed(MOTOR_LOW);
         while (currLineDetected < 4) {
             // Rotate in place to find the next line.
             leftMotor.backward();
             rightMotor.forward();
-            if (SensorsPoller.getCurrentLightIntensity() < 0.3) { //Compare intensities
+            if (SensorsPoller.getCurrentLightIntensity() < 0.5) { //Compare intensities
                 angleAtLines[currLineDetected] = odometer.getXYT()[2];
                 currLineDetected++;
                 Sound.beep();
@@ -150,7 +150,7 @@ public class Localization {
             Navigation.turnTo(-10); // robot always under turns to right
         }
         odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
-        Navigation.turnTo(15);
+        //       Navigation.turnTo(15);
 
 //        //todo, fix ressources for team number with wifi server
 //        if (Resources.greenTeam == 15) {
