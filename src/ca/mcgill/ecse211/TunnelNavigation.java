@@ -10,44 +10,53 @@ public class TunnelNavigation {
      * @param tunnelY: the x coordinate of the final destination
      * @param tunnelX: the y coordinate of the final destination
      */
-    public static void entranceOfTunnel(double tunnelX, double tunnelY) {
+
+    public static void entranceOfTunnel() {
         double currentX = odometer.getXYT()[0];
         double currentY = odometer.getXYT()[1];
-    
-        if (greenTeam == 15) {
+        
+        // if (greenTeam == 15) {
+
             //move horizontally first
-            Navigation.travelTo(tunnelX, currentY);
-            Navigation.travelTo(tunnelX, tunnelY);
-        }
-        else {
-            //move vertically first
-            Navigation.travelTo(currentX, tunnelY);
-            Navigation.travelTo(tunnelX, tunnelY);
-        }
+            Navigation.travelTo((tng.ll.x-1)*30.48, currentY);
+            Navigation.travelTo((tng.ll.x-1)*30.48, (tng.ll.y-1)*30.48)
+        // }
+        // else {
+        //     //move vertically first
+        //     Navigation.travelTo(currentX, (tnr.ll.y)*30.48)
+        //     Navigation.travelTo((tnr.ll.x-1)*30.48, (tnr.ll.y)*30.48)
+        // }
     }
     
     public static void exitOfTunnel(double xTopRight, double yTopRight){
-    
+        
     }
     
     //todo, need to add doging algorithm
-    public static void insideTunnel(boolean isShortTunnel){
+    public static void goThroughTunnel(){
         /*
         sweap sensor, and get the angle of the sensor.
         if something is found, dodge accordinly
          */
-        if (isShortTunnel) {
-            rightMotor.rotate(Navigation.convertDistance(30.48), true);
-            leftMotor.rotate(Navigation.convertDistance(30.48), false);
-        }
-        else {
-            rightMotor.rotate(Navigation.convertDistance(60.96), true);
-            leftMotor.rotate(Navigation.convertDistance(60.96), false);
-        }
+        double currentX = odometer.getXYT()[0];
+        double currentY = odometer.getXYT()[1];
+        
+        // if (greenTeam == 15) {
+            //move horizontally first
+            Navigation.travelTo((tng.ll.x+0.5)*30.48, currentY);
+            Navigation.travelTo((tng.ll.x+0.5)*30.48, (tng.ur.y+0.5)*30.48)
+        // }
+        // else {
+        //     //move vertically first          
+        //     Navigation.travelTo(currentX, (tnr.ll.y+0.5)*30.48)
+        //     Navigation.travelTo((tnr.ur.x+0.5)*30.48, (tnr.ll.y+0.5)*30.48)
+        // }
     }
     
-    public static void shootingPoint(double binX, double binY){
-    
+    public static void shootingPoint(){
+        Navigation.travelTo(bin.x, bin.y);
+        //Rotate to angle
+        Navigation.turnTo(tnr.ll.x)
     }
     public static void firePingPongBall(){
         //motor rotate so it touches the sensor
