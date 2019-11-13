@@ -5,6 +5,7 @@ import lejos.hardware.Sound;
 import static ca.mcgill.ecse211.Resources.*;
 
 public class Localization {
+    static double[] angleAtLines = new double[4];
     
     /**
      * returns the current location of the ultrasonic sensor
@@ -17,7 +18,8 @@ public class Localization {
     }
     
     public static void fallingEdge() {
-        
+        leftMotor.setSpeed(ROTATE_SPEED);
+        rightMotor.setSpeed(ROTATE_SPEED);
         double angle1;
         double angle2;
         double turnAngle;
@@ -37,9 +39,9 @@ public class Localization {
             leftMotor.backward();
             rightMotor.forward();
         }
-        
-        
-        //Record first ange
+    
+    
+        //Record first angle
         angle1 = odometer.getXYT()[2];
         
         while (SensorsPoller.getCurrentDistance() < 75) {
@@ -84,69 +86,82 @@ public class Localization {
     public static void travelUntilLineHit(int turnAngle) {
         // Face origin
         Navigation.turnTo(turnAngle);
-        leftMotor.setSpeed(ROTATE_SPEED);
-        rightMotor.setSpeed(ROTATE_SPEED);
+        leftMotor.setSpeed(MOTOR_LOW);
+        rightMotor.setSpeed(MOTOR_LOW);
         while (true) {
-            System.out.println(SensorsPoller.getCurrentLightIntensity());
-            
+    
+    
             leftMotor.forward();
             rightMotor.forward();
+            // Move backwards to put the rotation point on the line
+    
             if (SensorsPoller.getCurrentLightIntensity() < 0.3) { // Compare to previous intensity
-                leftMotor.stop();
-                rightMotor.stop();
+                leftMotor.stop(true);
+                rightMotor.stop(false);
+                sleep(100);
+                leftMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), true);
+                rightMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), false);
+        
                 Sound.beep();
                 break;
             }
         }
-        // Move backwards to put the rotation point on the line
-        leftMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), true);
-        rightMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), false);
+     
+
     }
     
     public static void centralizeAtPoint(double xCoord, double yCoord){
-        double[] angleAtLines = new double[4];
-        double curIntensity = SensorsPoller.getCurrentDistance();
-        double previousIntensity = SensorsPoller.getPreviousLightIntensity();
-            boolean onlyHitOnce = false;
-            int currLineDetected = 0;// Count how many lines we've detected this far.
-            double currentX;
-            double currentY;
-            double angleX;
-            double angleY;
-            previousIntensity = curIntensity;
-            while (currLineDetected < 4) {
-                // Rotate in place to find the next line.
-                leftMotor.backward();
-                rightMotor.forward();
-                if (SensorsPoller.getIsLineHit() && !onlyHitOnce) { // Compare to previous intensity
-                    onlyHitOnce = true;
-                    angleAtLines[currLineDetected] = odometer.getXYT()[2];
-                    currLineDetected++;
-                    Sound.beep();
-                }
-                if (!SensorsPoller.getIsLineHit())
-                    onlyHitOnce = false;
-                sleep(50);
+        int currLineDetected = 0;// Count how many lines we've detected this far.
+        double currentX;
+        double currentY;
+        double angleX;
+        double angleY;
+        leftMotor.setSpeed(ROTATE_SPEED);
+        rightMotor.setSpeed(ROTATE_SPEED);
+        while (currLineDetected < 4) {
+            // Rotate in place to find the next line.
+            leftMotor.backward();
+            rightMotor.forward();
+            if (SensorsPoller.getCurrentLightIntensity() < 0.3) { //Compare intensities
+                angleAtLines[currLineDetected] = odometer.getXYT()[2];
+                currLineDetected++;
+                Sound.beep();
             }
-            // Stops the motors
-            leftMotor.stop(true);
-            rightMotor.stop();
-        
-            // Find out our angle using the difference of the lines.
-            angleY = angleAtLines[2] - angleAtLines[0]; // Lines 0 and 2 are the vertical lines
-            angleX = angleAtLines[3] - angleAtLines[1]; // Lines 1 and 3 are the horizontal lines
-        
-            // Get dx and dy
-            currentX = currentLocation(angleY);
-            currentY = currentLocation(angleX);
-        
-            sleep(1000);
-        
-            // Go to origin
-            odometer.setXYT(currentX, currentY, odometer.getXYT()[2]); // updates odo with current location compared to
-            // origin
-            Navigation.travelTo(xCoord, yCoord); // make it travel to origin
-            odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
+        }
+        // Stops the motors
+        leftMotor.stop(true);
+        rightMotor.stop(false);
+    
+        // Find out our angle using the difference of the lines.
+        angleY = angleAtLines[2] - angleAtLines[0]; // Lines 0 and 2 are the vertical lines
+        angleX = angleAtLines[3] - angleAtLines[1]; // Lines 1 and 3 are the horizontal lines
+    
+        // Get dx and dy
+        currentX = currentLocation(angleY);
+        currentY = currentLocation(angleX);
+    
+        // Go to origin
+        odometer.setXYT(currentX, currentY, odometer.getXYT()[2]); // updates odo with current location compared to
+        // origin
+        Navigation.travelTo(xCoord, yCoord); // make it travel to origin
+    
+        // Turn to face 0 degrees
+        double currAngle = odometer.getXYT()[2];
+        if (currAngle <= 360 && currAngle >= 2.0) {
+            Navigation.turnTo(-10); // robot always under turns to right
+        }
+        odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
+        Navigation.turnTo(15);
+    
+        //todo, fix ressources for team number with wifi server
+        if (Resources.greenTeam == 15) {
+            odometer.setXYT(1 * TILE_SIZE, 8 * TILE_SIZE, 270);
+        }
+    
+        if (Resources.greenTeam != 15) {
+            odometer.setXYT(14 * TILE_SIZE, 1 * TILE_SIZE, 90);
+        }
+      
     }
     
     /**

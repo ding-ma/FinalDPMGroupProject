@@ -1,5 +1,4 @@
 package ca.mcgill.ecse211;
-import static ca.mcgill.ecse211.Resources.*;
 
 public class SensorsPoller implements Runnable{
     
@@ -34,7 +33,7 @@ public class SensorsPoller implements Runnable{
             setCurrentLightIntensity(previousLight[0]);
             
             setIsLineHit(getCurrentLightIntensity(), getPreviousLightIntensity());
-            System.out.println(previousLight[0]);
+    
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
