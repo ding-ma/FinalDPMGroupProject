@@ -16,8 +16,8 @@ public class Main implements Runnable{
             LCD.drawString(" to    | and    ", 0, 2);
             LCD.drawString(" and   | Shoot  ", 0, 3);
             LCD.drawString(" Shoot |        ", 0, 4);
-            
-         //   buttonChoice = Button.waitForAnyPress();//Wait for the user to decide
+    
+            //  buttonChoice = Button.waitForAnyPress();//Wait for the user to decide
            buttonChoice = Button.ID_LEFT; //quick hack to work around this, starts faster
         } while (buttonChoice != Button.ID_LEFT && buttonChoice != Button.ID_RIGHT);
         
@@ -28,23 +28,43 @@ public class Main implements Runnable{
             new Thread(new Display()).start(); //start display thread
             new Thread(new Main()).start();
         }
+        if (Button.waitForAnyPress() == Button.ID_ESCAPE) {
+            System.exit(0);
+        }
     }
     
     @Override
     public void run() {
-        Localization.fallingEdge();
-        Localization.travelUntilLineHit(45);
-        Localization.centralizeAtPoint(0, 0);
-        TunnelNavigation.entranceOfTunnel(tng.ll.x,tng.ll.y,true);
-        //maybe localize before?
-        TunnelNavigation.insideTunnel(true);
-        TunnelNavigation.shootingPoint(bin.x,bin.y);
-        TunnelNavigation.firePingPongBall();
-        TunnelNavigation.exitOfTunnel(tng.ur.x,tng.ur.y);
-        //maybe localize before?
-        TunnelNavigation.insideTunnel(false);
-        //once u got our of the tunnel, u can now go back to starting point
-        Navigation.travelTo(0, 0);
+
+//        Localization.fallingEdge();
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        Localization.travelUntilLineHit(45);
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        Localization.centralizeAtPoint(0, 0);
+        odometer.setXYT(1 * TILE_SIZE, 1 * TILE_SIZE, 0);
+        Navigation.travelTo(3 * TILE_SIZE, 3 * TILE_SIZE); // this should be the lower left of the tunnel (-1,-1)
+        Localization.centralizeAtPoint(3 * TILE_SIZE, 3 * TILE_SIZE);
+        
+//        TunnelNavigation.entranceOfTunnel(5,3,true);
+//        //maybe localize before?
+//        TunnelNavigation.insideTunnel(true);
+//        TunnelNavigation.shootingPoint(15,9);
+//        TunnelNavigation.firePingPongBall();
+//        TunnelNavigation.exitOfTunnel(5,5);
+//        //maybe localize before?
+//        TunnelNavigation.insideTunnel(false);
+//        //once u got our of the tunnel, u can now go back to starting point
+//        Navigation.travelTo(0, 0);
         
     }
 }
