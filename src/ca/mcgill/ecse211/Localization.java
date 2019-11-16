@@ -77,8 +77,8 @@ public class Localization {
         turnAngle = dTheta + odometer.getXYT()[2];
         
         //Turn to 0 degrees
-        leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
-        rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
+        leftMotor.rotate(-Navigation.convertAngle(turnAngle + 30), true);
+        rightMotor.rotate(Navigation.convertAngle(turnAngle + 30), false);
         odometer.setXYT(0.0, 0.0, 0.0);
         
     }
@@ -94,7 +94,6 @@ public class Localization {
             leftMotor.forward();
             rightMotor.forward();
             // Move backwards to put the rotation point on the line
-    
             if (SensorsPoller.getCurrentLightIntensity() < 0.3) { // Compare to previous intensity
                 leftMotor.stop(true);
                 rightMotor.stop(false);
@@ -147,7 +146,7 @@ public class Localization {
         // Turn to face 0 degrees
         double currAngle = odometer.getXYT()[2];
         if (currAngle <= 360 && currAngle >= 2.0) {
-            Navigation.turnTo(-10); // robot always under turns to right
+            Navigation.turnTo(-20); // robot always under turns to right
         }
         odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
         //       Navigation.turnTo(15);
