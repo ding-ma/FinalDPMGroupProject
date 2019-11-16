@@ -1,9 +1,9 @@
 package ca.mcgill.ecse211;
 
 import lejos.hardware.Button;
+import lejos.hardware.Sound;
 
-import static ca.mcgill.ecse211.Resources.LCD;
-import static ca.mcgill.ecse211.Resources.odometer;
+import static ca.mcgill.ecse211.Resources.*;
 
 public class Main implements Runnable{
     public static void main(String[] args) {
@@ -17,9 +17,8 @@ public class Main implements Runnable{
             LCD.drawString(" to    | and    ", 0, 2);
             LCD.drawString(" and   | Shoot  ", 0, 3);
             LCD.drawString(" Shoot |        ", 0, 4);
-    
-            //  buttonChoice = Button.waitForAnyPress();//Wait for the user to decide
-           buttonChoice = Button.ID_LEFT; //quick hack to work around this, starts faster
+            //buttonChoice = Button.waitForAnyPress();//Wait for the user to decide
+            buttonChoice = Button.ID_LEFT; //quick hack to work around this, starts faster
         } while (buttonChoice != Button.ID_LEFT && buttonChoice != Button.ID_RIGHT);
         
         
@@ -27,7 +26,10 @@ public class Main implements Runnable{
             new Thread(odometer).start(); // start odo thread
             new Thread(new SensorsPoller()).start();
             new Thread(new Display()).start(); //start display thread
-            new Thread(new Main()).start();
+            new Thread(new OdoCorrection()).start();
+            //     new Thread(new Main()).start();
+            Navigation.travelTo(1 * TILE_SIZE, 4 * TILE_SIZE);
+        
         }
         if (Button.waitForAnyPress() == Button.ID_ESCAPE) {
             System.exit(0);
@@ -36,40 +38,42 @@ public class Main implements Runnable{
     
     @Override
     public void run() {
-        for (int i = 1; i < 5; i++) {
-            Navigation.turnTo(i * 90);
-        
+        leftMotor.setSpeed(FORWARD_SPEED);
+        rightMotor.setSpeed(FORWARD_SPEED);
+    
+        while (true) {
+            leftMotor.forward();
+            rightMotor.forward();
+            if (SensorsPoller.getIsLineHitLeft()) {
+                Sound.beep();
+            }
         }
-//        Localization.fallingEdge();
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
+//        Localization.fallingEdge(); //gyro reset after this
 //        Localization.travelUntilLineHit(45);
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
 //        Localization.centralizeAtPoint(1 * TILE_SIZE,1 * TILE_SIZE);
-//        odometer.setXYT(1 * TILE_SIZE, 1 * TILE_SIZE, 0);
-
-//        TunnelNavigation.entranceOfTunnel();
+//       odometer.setXYT(1 * TILE_SIZE, 1 * TILE_SIZE, 0);
+//
+//       Navigation.travelTo(4*TILE_SIZE, 2*TILE_SIZE);       
+//       Localization.travelUntilLineHit(SensorsPoller.getCurrentAngle());
+//       Localization.centralizeAtPoint(4*TILE_SIZE, 2*TILE_SIZE);
+    
+    
+        // TunnelNavigation.entranceOfTunnel();
+        //    System.out.println(SensorsPoller.getCurrentAngle());
+        // SensorsPoller.resetGyro(SensorsPoller.getCurrentAngle());
+        //      System.out.println(SensorsPoller.getCurrentAngle());
 //        Sound.beep();
 //        Localization.travelUntilLineHit(45);
 //        Localization.centralizeAtPoint(3*TILE_SIZE, 2*TILE_SIZE);
 //        Sound.beep();
 //        odometer.setXYT(3*TILE_SIZE, 2*TILE_SIZE, 0);
-//        
+//
 //        TunnelNavigation.goThroughTunnel();
 //        TunnelNavigation.shootingPoint();
 //        TunnelNavigation.firePingPongBall();
 //        Navigation.travelTo(3 * TILE_SIZE, 3 * TILE_SIZE); // this should be the lower left of the tunnel (-1,-1)
 //        Localization.centralizeAtPoint(3 * TILE_SIZE, 3 * TILE_SIZE);
-        
+
 //        TunnelNavigation.entranceOfTunnel(5,3,true);
 //        //maybe localize before?
 //        TunnelNavigation.insideTunnel(true);
@@ -78,7 +82,7 @@ public class Main implements Runnable{
 //        TunnelNavigation.exitOfTunnel(5,5);
 //        //maybe localize before?
 //        TunnelNavigation.insideTunnel(false);
-//        //once u got our of the tunnel, u can now go back to starting point
+        //once u got our of the tunnel, u can now go back to starting point
 //        Navigation.travelTo(0, 0);
         
     }

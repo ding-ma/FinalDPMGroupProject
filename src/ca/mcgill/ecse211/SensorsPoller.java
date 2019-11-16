@@ -1,94 +1,118 @@
 package ca.mcgill.ecse211;
 
-public class SensorsPoller implements Runnable{
+import static ca.mcgill.ecse211.Resources.*;
+
+public class SensorsPoller implements Runnable {
     
-    private float[] gyroData = new float[Resources.GYRO_SENSOR.sampleSize()];
-    private float[] usData = new float[Resources.US_SENSOR.sampleSize()];
-    private float[] lightData = new float[Resources.COLOR_SENSOR.sampleSize()];
-    private float[] previousLight = new float[Resources.COLOR_SENSOR.sampleSize()];
+    private static double currentLightIntensityRight;
+    private static double previousLightIntensityRight;
+    private static double currentLightIntensityLeft;
+    private static double previousLightIntensityLeft;
+    private static boolean isLineHitRight = false;
     
-    
-    private static double currentAngle;
     private static int currentDistance;
-    private static double currentLightIntensity;
-    private static double previousLightIntensity;
-    private static double lightIntensity;
-    private static double angleOffSet;
+    private static boolean isIsLineHitLeft = false;
+    private float[] usData = new float[US_SENSOR.sampleSize()];
+    private float[] lightDataRight = new float[COLOR_SENSOR_RIGHT.sampleSize()];
+    private float[] previousLightRight = new float[COLOR_SENSOR_RIGHT.sampleSize()];
+    private float[] lightDataLeft = new float[COLOR_SENSOR_LEFT.sampleSize()];
+    private float[] previousLightLeft = new float[COLOR_SENSOR_LEFT.sampleSize()];
     
-    private static boolean isLineHit =false;
-    @Override
-    public void run() {
-        Resources.COLOR_SENSOR.getMode("Red").fetchSample(lightData, 0);
-        setPreviousLightIntensity(lightData[0]);
-        
-        while (true){
-            Resources.GYRO_SENSOR.getAngleMode().fetchSample(gyroData, 0);
-            Resources.US_SENSOR.getDistanceMode().fetchSample(usData, 0);
-            
-            setGyroData(gyroData[0]);
-            setUsData((int)(usData[0]*100));
-            
-            Resources.COLOR_SENSOR.getMode("Red").fetchSample(previousLight, 0);
-            
-            setCurrentLightIntensity(previousLight[0]);
-            
-            setIsLineHit(getCurrentLightIntensity(), getPreviousLightIntensity());
-    
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-    
-        }
-    }
-    
-    private void setGyroData(double angle){
-        double temp = angle% 359;
-        if (angle < 0)
-            temp = 360 + angle % 359; //todo, check if adding 359 vs 360. it was at 360
-        currentAngle = temp;
-    }
-    
-    private void setUsData(int distance){
-        currentDistance = distance;
-    }
-    
-    private void setCurrentLightIntensity(double lightIntensity){
-        currentLightIntensity = lightIntensity;
-    }
-    private void setPreviousLightIntensity(double prevLightIntensity){
-        previousLightIntensity = prevLightIntensity;
-    }
-    
-    public static double getCurrentAngle() {
-        return currentAngle;
-    }
-    
-    public static int getCurrentDistance(){
+    public static int getCurrentDistance() {
         return currentDistance;
     }
     
-    public static double getCurrentLightIntensity() {
-        return currentLightIntensity;
+    public static double getCurrentLightIntensityRight() {
+        return currentLightIntensityRight;
     }
     
-    public static double getPreviousLightIntensity() {
-        return previousLightIntensity;
+    private void setCurrentLightIntensityRight(double lightIntensity) {
+        currentLightIntensityRight = lightIntensity;
     }
     
-    public void setIsLineHit(double currentLightIntensity, double previousLightIntensity){
-        double diffValue = currentLightIntensity - previousLightIntensity;
-        if(diffValue<0)
-            isLineHit = false;
-        if(diffValue > 0.1 && !isLineHit){
-            isLineHit = true;
+    public static double getPreviousLightIntensityRight() {
+        return previousLightIntensityRight;
+    }
+    
+    private void setPreviousLightIntensityRight(double prevLightIntensity) {
+        previousLightIntensityRight = prevLightIntensity;
+    }
+    
+    public static double getCurrentLightIntensityLeft() {
+        return currentLightIntensityLeft;
+    }
+    
+    private void setCurrentLightIntensityLeft(double lightIntensity) {
+        currentLightIntensityLeft = lightIntensity;
+    }
+    
+    public static double getPreviousLightIntensityLeft() {
+        return previousLightIntensityLeft;
+    }
+    
+    private void setPreviousLightIntensityLeft(double previousLightIntensity) {
+        previousLightIntensityLeft = previousLightIntensity;
+    }
+    
+    public static boolean getIsLineHitRight() {
+        return isLineHitRight;
+    }
+    
+    public static boolean getIsLineHitLeft() {
+        return isIsLineHitLeft;
+    }
+    
+    @Override
+    public void run() {
+        COLOR_SENSOR_RIGHT.getMode("Red").fetchSample(lightDataRight, 0);
+        setPreviousLightIntensityRight(lightDataRight[0]);
+    
+        COLOR_SENSOR_LEFT.getMode("Red").fetchSample(lightDataLeft, 0);
+        setPreviousLightIntensityLeft(lightDataLeft[0]);
+    
+        while (true) {
+            US_SENSOR.getDistanceMode().fetchSample(usData, 0);
+            setUsData((int) (usData[0] * 100));
+        
+            COLOR_SENSOR_RIGHT.getMode("Red").fetchSample(previousLightRight, 0);
+            setCurrentLightIntensityRight(previousLightRight[0]);
+        
+            COLOR_SENSOR_LEFT.getMode("Red").fetchSample(previousLightLeft, 0);
+            setCurrentLightIntensityLeft(previousLightLeft[0]);
+        
+            setIsLineHitRight(getCurrentLightIntensityRight(), getPreviousLightIntensityRight());
+            setIsLineHitLeft(getCurrentLightIntensityLeft(), getPreviousLightIntensityLeft());
+            try {
+                Thread.sleep(65);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        setPreviousLightIntensity(currentLightIntensity);
+    
+    }
+    
+    private void setUsData(int distance) {
+        currentDistance = distance;
+    }
+    
+    public void setIsLineHitRight(double currentLightIntensity, double previousLightIntensity) {
+        double diffValue = currentLightIntensity - previousLightIntensity;
+        if (diffValue < 0)
+            isLineHitRight = false;
+        if (diffValue > 0.1 && !isLineHitRight) {
+            isLineHitRight = true;
+        }
+        setPreviousLightIntensityRight(currentLightIntensity);
         
     }
-    public static boolean getIsLineHit(){
-        return isLineHit;
-    }
     
+    public void setIsLineHitLeft(double currentLightIntensity, double previousLightIntensity) {
+        double diffValue = currentLightIntensity - previousLightIntensity;
+        if (diffValue < 0)
+            isIsLineHitLeft = false;
+        if (diffValue > 0.1 && !isIsLineHitLeft) {
+            isIsLineHitLeft = true;
+        }
+        setPreviousLightIntensityLeft(currentLightIntensity);
+    }
 }

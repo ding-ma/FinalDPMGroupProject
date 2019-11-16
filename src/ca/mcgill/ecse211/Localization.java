@@ -80,22 +80,19 @@ public class Localization {
         leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
         rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
         odometer.setXYT(0.0, 0.0, 0.0);
-        
     }
     
-    public static void travelUntilLineHit(int turnAngle) {
+    public static void travelUntilLineHit(double turnAngle) {
         // Face origin
         Navigation.turnTo(turnAngle);
         leftMotor.setSpeed(MOTOR_LOW);
         rightMotor.setSpeed(MOTOR_LOW);
         while (true) {
-    
-    
             leftMotor.forward();
             rightMotor.forward();
             // Move backwards to put the rotation point on the line
     
-            if (SensorsPoller.getCurrentLightIntensity() < 0.3) { // Compare to previous intensity
+            if (SensorsPoller.getCurrentLightIntensityRight() < 0.3) { // Compare to previous intensity
                 leftMotor.stop(true);
                 rightMotor.stop(false);
                 sleep(100);
@@ -122,7 +119,7 @@ public class Localization {
             // Rotate in place to find the next line.
             leftMotor.backward();
             rightMotor.forward();
-            if (SensorsPoller.getCurrentLightIntensity() < 0.5) { //Compare intensities
+            if (SensorsPoller.getCurrentLightIntensityRight() < 0.5) { //Compare intensities
                 angleAtLines[currLineDetected] = odometer.getXYT()[2];
                 currLineDetected++;
                 Sound.beep();
@@ -156,7 +153,7 @@ public class Localization {
 //        if (Resources.greenTeam == 15) {
 //            odometer.setXYT(8 * TILE_SIZE, 1 * TILE_SIZE, 270);
 //        }
-//    
+//
 //        if (Resources.greenTeam != 15) {
 //            odometer.setXYT(1 * TILE_SIZE, 14 * TILE_SIZE, 90);
 //        }

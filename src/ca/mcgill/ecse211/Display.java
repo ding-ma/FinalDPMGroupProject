@@ -1,7 +1,9 @@
 package ca.mcgill.ecse211;
 
 import java.text.DecimalFormat;
-import static ca.mcgill.ecse211.Resources.*;
+
+import static ca.mcgill.ecse211.Resources.LCD;
+import static ca.mcgill.ecse211.Resources.odometer;
 
 public class Display implements Runnable {
     
@@ -39,7 +41,7 @@ public class Display implements Runnable {
             LCD.drawString("X: " + numberFormat.format(position[0]), 0, 0);
             LCD.drawString("Y: " + numberFormat.format(position[1]), 0, 1);
             LCD.drawString("T: " + numberFormat.format(position[2]), 0, 2);
-            
+    
             // this ensures that the data is updated only once every period
             updateEnd = System.currentTimeMillis();
             if (updateEnd - updateStart < DISPLAY_PERIOD) {
