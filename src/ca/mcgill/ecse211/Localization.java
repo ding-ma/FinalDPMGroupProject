@@ -20,6 +20,7 @@ public class Localization {
     public static void fallingEdge() {
         leftMotor.setSpeed(ROTATE_SPEED);
         rightMotor.setSpeed(ROTATE_SPEED);
+        
         double angle1;
         double angle2;
         double turnAngle;
@@ -77,8 +78,8 @@ public class Localization {
         turnAngle = dTheta + odometer.getXYT()[2];
         
         //Turn to 0 degrees
-        leftMotor.rotate(-Navigation.convertAngle(turnAngle + 30), true);
-        rightMotor.rotate(Navigation.convertAngle(turnAngle + 30), false);
+        leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
+        rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
         odometer.setXYT(0.0, 0.0, 0.0);
         
     }
@@ -121,7 +122,7 @@ public class Localization {
             // Rotate in place to find the next line.
             leftMotor.backward();
             rightMotor.forward();
-            if (SensorsPoller.getCurrentLightIntensity() < 0.5) { //Compare intensities
+            if (SensorsPoller.getCurrentLightIntensity() < 0.3) { //Compare intensities
                 angleAtLines[currLineDetected] = odometer.getXYT()[2];
                 currLineDetected++;
                 Sound.beep();
@@ -146,7 +147,7 @@ public class Localization {
         // Turn to face 0 degrees
         double currAngle = odometer.getXYT()[2];
         if (currAngle <= 360 && currAngle >= 2.0) {
-            Navigation.turnTo(-20); // robot always under turns to right
+            Navigation.turnTo(-10); // robot always under turns to right
         }
         odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
         //       Navigation.turnTo(15);

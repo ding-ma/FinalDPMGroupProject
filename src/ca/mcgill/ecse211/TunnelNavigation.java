@@ -28,7 +28,7 @@ public class TunnelNavigation {
         // }
         
 //        Test coordinates below
-        Navigation.travelTo((4) * 30.48, (3 - 1) * 30.48);
+        Navigation.travelTo((7) * 30.48, (4 - 1) * 30.48); //should be dependent on the tile and tunnel location
     }
     
     public static void exitOfTunnel(double xTopRight, double yTopRight){
@@ -61,13 +61,28 @@ public class TunnelNavigation {
         
        
         Navigation.turnTo(90);
-        leftMotor.rotate(Navigation.convertDistance(0.4*Resources.TILE_SIZE), true);
-        rightMotor.rotate(Navigation.convertDistance(0.4*Resources.TILE_SIZE), false);
+        leftMotor.rotate(Navigation.convertDistance(0.5*Resources.TILE_SIZE), true); //this should get the robot positioned in the centerwe
+        rightMotor.rotate(Navigation.convertDistance(0.5*Resources.TILE_SIZE), false);
         Navigation.turnTo(0);
         
-        //check if tunnelURx > tunnelLLx
-        leftMotor.forward();
-        rightMotor.forward();
+        //check if tunnelURx > tunnelLLx (we can calculate the distance to move forward by the cordinates of the tunnel.
+        //we also need to go fast through the tunnel to decrease drift over distance.
+        leftMotor.stop(true);
+        rightMotor.stop(false);
+        leftMotor.setSpeed(200);
+        rightMotor.setSpeed(200);
+        
+        while(true) {
+          leftMotor.forward();
+          rightMotor.forward();
+          if(odometer.getXYT()[1] > (4 + 1) * Resources.TILE_SIZE ) { //get to a good position away from the tunnel
+            leftMotor.stop(true);
+            rightMotor.stop(false);
+            Navigation.travelTo(3*Resources.TILE_SIZE,(5) * Resources.TILE_SIZE ); //change to coordinates tunnel
+            break;
+          }
+        }
+        
     }
     
     public static void shootingPoint(){

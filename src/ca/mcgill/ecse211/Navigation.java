@@ -81,6 +81,7 @@ public class Navigation {
         rightMotor.setSpeed(FORWARD_SPEED);
         
         double distToTravel = euclideanDistance(currentX, currentY, x, y);
+        System.out.println(distToTravel);
         rightMotor.rotate(convertDistance(distToTravel), true);
         leftMotor.rotate(convertDistance(distToTravel), false);
         Sound.beep();
