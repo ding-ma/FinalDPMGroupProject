@@ -172,7 +172,7 @@ public class Resources {
     /**
      * Allowed distance for falling edge.
      */
-    public static final int distFallingEdge = 25;
+    public static final int distFallingEdge =35; //25;
     
     /**
      * Allowed distance for falling edge calculations.

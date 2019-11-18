@@ -147,7 +147,7 @@ public class Localization {
         // Turn to face 0 degrees
         double currAngle = odometer.getXYT()[2];
         if (currAngle <= 360 && currAngle >= 2.0) {
-            Navigation.turnTo(-10); // robot always under turns to right
+            Navigation.turnTo(-20); // robot always under turns to right
         }
         odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
         //       Navigation.turnTo(15);

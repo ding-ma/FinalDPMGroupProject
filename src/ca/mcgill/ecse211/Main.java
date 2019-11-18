@@ -114,7 +114,7 @@ public class Main implements Runnable{
 //      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
 //      System.out.println("Odometer= " + odometer.getXYT()[2]);
 //     System.out.println(Arrays.toString(odometer.getXYT())); 
-//        Localization.fallingEdge();
+        Localization.fallingEdge();
 //        try {
 //            Thread.sleep(500);
 //        } catch (InterruptedException e) {
