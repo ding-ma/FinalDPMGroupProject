@@ -1,10 +1,11 @@
 package ca.mcgill.ecse211;
 
-import static ca.mcgill.ecse211.Resources.SENSOR_LOCATION;
+import static ca.mcgill.ecse211.Resources.*;
 import static ca.mcgill.ecse211.Resources.leftMotor;
 import static ca.mcgill.ecse211.Resources.odometer;
 import static ca.mcgill.ecse211.Resources.rightMotor;
 import static ca.mcgill.ecse211.Resources.triggerMotor;
+import java.util.Arrays;
 import lejos.hardware.Sound;
 
 public class TunnelNavigation {
@@ -71,16 +72,97 @@ public class TunnelNavigation {
         rightMotor.stop(false);
         leftMotor.setSpeed(200);
         rightMotor.setSpeed(200);
+//        ultraSonicMotor.setSpeed(50);
         
+//        leftMotor.rotate(Navigation.convertDistance(1.2*Resources.TILE_SIZE), true); //this should get the robot positioned in the centerwe
+//        rightMotor.rotate(Navigation.convertDistance(1.2*Resources.TILE_SIZE), false);
+//        
+        
+//        ultraSonicMotor.rotate(-60);
+//        ultraSonicMotor.rotate(120);
+//        ultraSonicMotor.rotate(-120);
+        
+//        double[] distTheta = new double[2];
         while(true) {
           leftMotor.forward();
           rightMotor.forward();
-          if(odometer.getXYT()[1] > (4 + 1) * Resources.TILE_SIZE ) { //get to a good position away from the tunnel
-            leftMotor.stop(true);
-            rightMotor.stop(false);
-            Navigation.travelTo(3*Resources.TILE_SIZE,(5) * Resources.TILE_SIZE ); //change to coordinates tunnel
-            break;
+          System.out.println(SensorsPoller.getCurrentDistance());
+          
+          if(SensorsPoller.getCurrentDistance() < 33) {
+            System.out.println("Here=" + SensorsPoller.getCurrentDistance());
+            leftMotor.setSpeed(200);
+            rightMotor.setSpeed(206);
+            leftMotor.backward();
+          rightMotor.forward();
+          }else {
+            leftMotor.setSpeed(rightMotor.getSpeed());
+            leftMotor.forward();
+            rightMotor.forward();
           }
+//          ultraSonicMotor.rotate(120); //taken at right
+//        
+//          try {
+//            Thread.sleep(200); 
+//            distTheta[0] = SensorsPoller.getCurrentDistance();
+//          } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//          }
+//                 
+//          ultraSonicMotor.rotate(-120); //taken at the left
+////          ultraSonicMotor.stop();
+//          try {
+//            Thread.sleep(200);
+//            distTheta[1] = SensorsPoller.getCurrentDistance();
+//          } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//          }
+//          
+//          System.out.println(Arrays.toString(distTheta));
+//    
+//       
+//          
+//          if(distTheta[0] > distTheta[1]) {
+//            leftMotor.setSpeed(180);
+//            rightMotor.setSpeed(150);
+//            leftMotor.forward();
+//            rightMotor.forward();
+////            try {
+////              Thread.sleep(1000);
+////            } catch (InterruptedException e) {
+////              // TODO Auto-generated catch block
+////              e.printStackTrace();
+////            }
+//          }else if(distTheta[0] < distTheta[1]) {
+//            rightMotor.setSpeed(170);
+//            leftMotor.setSpeed(150);
+//            leftMotor.forward();
+//            rightMotor.forward();
+////            try {
+////              Thread.sleep(1000);
+////            } catch (InterruptedException e) {
+////              // TODO Auto-generated catch block
+////              e.printStackTrace();
+////            }
+//          }else {
+//            leftMotor.setSpeed(170);
+//            rightMotor.setSpeed(170);
+//            leftMotor.forward();
+//            rightMotor.forward();
+////            try {
+////              Thread.sleep(1000);
+////            } catch (InterruptedException e) {
+////              // TODO Auto-generated catch block
+////              e.printStackTrace();
+////            }
+//          }
+//          if(odometer.getXYT()[1] > (4 + 1) * Resources.TILE_SIZE ) { //get to a good position away from the tunnel
+//            leftMotor.stop(true);
+//            rightMotor.stop(false);
+//            Navigation.travelTo(3*Resources.TILE_SIZE,(5) * Resources.TILE_SIZE ); //change to coordinates tunnel
+//            break;
+//          }
         }
         
     }

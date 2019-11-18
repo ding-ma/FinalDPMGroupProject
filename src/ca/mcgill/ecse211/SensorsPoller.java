@@ -33,7 +33,7 @@ public class SensorsPoller implements Runnable{
             setCurrentLightIntensity(previousLight[0]);
             
             setIsLineHit(getCurrentLightIntensity(), getPreviousLightIntensity());
-    System.out.println(getCurrentAngle());
+//    System.out.println(getCurrentAngle());
             try {
                 Thread.sleep(75);
             } catch (InterruptedException e) {

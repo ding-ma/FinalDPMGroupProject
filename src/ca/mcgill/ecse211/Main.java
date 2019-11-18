@@ -114,21 +114,21 @@ public class Main implements Runnable{
 //      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
 //      System.out.println("Odometer= " + odometer.getXYT()[2]);
 //     System.out.println(Arrays.toString(odometer.getXYT())); 
-        Localization.fallingEdge();
+//        Localization.fallingEdge();
 //        try {
 //            Thread.sleep(500);
 //        } catch (InterruptedException e) {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
-        Localization.travelUntilLineHit(45);
+//        Localization.travelUntilLineHit(45);
 //        try {
 //            Thread.sleep(500);
 //        } catch (InterruptedException e) {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
-        Localization.centralizeAtPoint(1 * Resources.TILE_SIZE,1 * Resources.TILE_SIZE);
+//        Localization.centralizeAtPoint(1 * Resources.TILE_SIZE,1 * Resources.TILE_SIZE);
 //      try {
 //      Thread.sleep(500);
 //      } catch (InterruptedException e) {
@@ -154,7 +154,7 @@ public class Main implements Runnable{
 ////        Navigation.turnTo(-35); //it seemed to under turn after localization so this fixes it.
 //        odometer.setTheta(0);   //should be facing zero by this point.
 ////     
-//      TunnelNavigation.goThroughTunnel();
+      TunnelNavigation.goThroughTunnel();
 //      Localization.centralizeAtPoint(3*Resources.TILE_SIZE, (4+1)*Resources.TILE_SIZE); //it has exited the tunnel and is at the nearest safe zone
 //      
 //        
