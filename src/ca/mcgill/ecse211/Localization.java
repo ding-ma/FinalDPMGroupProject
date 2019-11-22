@@ -80,6 +80,7 @@ public class Localization {
         //Turn to 0 degrees
         leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
         rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
+        //      Navigation.turnTo(-3);
         odometer.setXYT(0.0, 0.0, 0.0);
         
     }
@@ -146,11 +147,12 @@ public class Localization {
     
         // Turn to face 0 degrees
         double currAngle = odometer.getXYT()[2];
-        if (currAngle <= 360 && currAngle >= 2.0) {
-            Navigation.turnTo(-20); // robot always under turns to right
-        }
+//        if (currAngle <= 360 && currAngle >= 2.0) {
+//            Navigation.turnTo(-20); // robot always under turns to right
+//        }
+        
         odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
-        //       Navigation.turnTo(15);
+        Navigation.turnTo(0);
 
 //        //todo, fix ressources for team number with wifi server
 //        if (Resources.greenTeam == 15) {

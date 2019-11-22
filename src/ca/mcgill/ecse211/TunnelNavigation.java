@@ -1,12 +1,6 @@
 package ca.mcgill.ecse211;
 
 import static ca.mcgill.ecse211.Resources.*;
-import static ca.mcgill.ecse211.Resources.leftMotor;
-import static ca.mcgill.ecse211.Resources.odometer;
-import static ca.mcgill.ecse211.Resources.rightMotor;
-import static ca.mcgill.ecse211.Resources.triggerMotor;
-import java.util.Arrays;
-import lejos.hardware.Sound;
 
 public class TunnelNavigation {
     
@@ -29,7 +23,9 @@ public class TunnelNavigation {
         // }
         
 //        Test coordinates below
-        Navigation.travelTo((7) * 30.48, (4 - 1) * 30.48); //should be dependent on the tile and tunnel location
+        Navigation.travelTo((6) * 30.48, (4 - 1) * 30.48); //should be dependent on the tile and tunnel location
+        Localization.centralizeAtPoint((6) * 30.48, (4 - 1) * 30.48);
+        
     }
     
     public static void exitOfTunnel(double xTopRight, double yTopRight){

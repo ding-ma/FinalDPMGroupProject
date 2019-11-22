@@ -2,11 +2,7 @@ package ca.mcgill.ecse211;
 
 import lejos.hardware.Button;
 
-import static ca.mcgill.ecse211.Resources.LCD;
-import static ca.mcgill.ecse211.Resources.leftMotor;
-import static ca.mcgill.ecse211.Resources.odometer;
-import static ca.mcgill.ecse211.Resources.rightMotor;
-import java.util.Arrays;
+import static ca.mcgill.ecse211.Resources.*;
 
 public class Main implements Runnable{
     public static void main(String[] args) {
@@ -39,7 +35,18 @@ public class Main implements Runnable{
     
     @Override
     public void run() {
-
+//    	Localization.fallingEdge();
+//    	Localization.travelUntilLineHit(45);
+//    	Localization.centralizeAtPoint(35.48, 35.48);
+        odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
+        TunnelNavigation.entranceOfTunnel();
+    	
+    	
+    	
+    	
+    	
+    	
+    	
 //      odometer.setXYT(30.48, 30.48,0);
 //      Navigation.travelTo(1* Resources.TILE_SIZE, 13*Resources.TILE_SIZE);
 //      leftMotor.stop(true);
@@ -114,7 +121,7 @@ public class Main implements Runnable{
 //      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
 //      System.out.println("Odometer= " + odometer.getXYT()[2]);
 //     System.out.println(Arrays.toString(odometer.getXYT())); 
-        Localization.fallingEdge();
+        //      Localization.fallingEdge();
        /***
         * TURN TO  
         */
