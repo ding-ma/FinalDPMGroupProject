@@ -24,7 +24,7 @@ public class Resources {
      * The IP address of the server that transmits data to the robot. Set this to the default for the
      * beta demo and competition.
      */
-    public static final String SERVER_IP = "192.168.2.23";//"192.168.2.35";
+    public static final String SERVER_IP = "192.168.2.23";
     
     /**
      * Your team number.
@@ -49,7 +49,7 @@ public class Resources {
     /**
      * The robot width in centimeters.
      */
-    public static final double TRACK = 16;//16; // increased by .5 for lower voltage 15.1, on small test is 15.4
+    public static final double TRACK = 17.1; //16; // increased by .5 for lower voltage 15.1, on small test is 15.4
     
     /**
      * Lightsensor distance to the middle of track.

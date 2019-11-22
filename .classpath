@@ -7,6 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Koshi/git/FinalDPMGroupProject/lib/EV3WiFiClient.jar"/>
+	<classpathentry kind="lib" path="lib/EV3WiFiClient.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
