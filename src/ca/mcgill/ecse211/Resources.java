@@ -54,7 +54,7 @@ public class Resources {
     /**
      * Lightsensor distance to the middle of track.
      */
-    public static final double SENSOR_LOCATION = 13.4;//13.4
+    public static final double SENSOR_LOCATION = 13.5;//13.4
     /**
      * Band width used for the bang-bang style controller
      */

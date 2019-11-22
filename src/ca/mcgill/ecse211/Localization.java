@@ -143,7 +143,10 @@ public class Localization {
     
         odometer.setXYT(currentX + xCoord, currentY + yCoord, odometer.getXYT()[2]); // updates odo with current location compared to
         // origin
-        Navigation.travelTo(xCoord, yCoord); // make it travel to origin
+        if(!(angleX < 3 && angleY <3)) {
+          Navigation.travelTo(xCoord, yCoord); // make it travel to origin
+        }
+      
     
         // Turn to face 0 degrees
         double currAngle = odometer.getXYT()[2];
