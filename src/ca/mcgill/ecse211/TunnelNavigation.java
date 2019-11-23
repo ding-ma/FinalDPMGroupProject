@@ -84,79 +84,120 @@ public class TunnelNavigation {
 
 
     double[] distTheta = new double[2];
+//    while (true) {
+//
+//
+//      // Option 2 for tunnel nav
+//      /*
+//       * leftMotor.forward(); rightMotor.forward(); System.out.println(SensorsPoller.getCurrentDistance());
+//       * 
+//       * if(SensorsPoller.getCurrentDistance() < 33) { System.out.println("Here=" + SensorsPoller.getCurrentDistance());
+//       * leftMotor.setSpeed(200); rightMotor.setSpeed(206); leftMotor.backward(); rightMotor.forward(); }else {
+//       * leftMotor.setSpeed(rightMotor.getSpeed()); leftMotor.forward(); rightMotor.forward(); }
+//       */
+//
+//      // Option 1 sweeping sensor implementation
+//      leftMotor.setSpeed(50);
+//      rightMotor.setSpeed(50);
+//      leftMotor.forward();
+//      rightMotor.forward();
+//
+//      ultraSonicMotor.rotate(120); // taken at right
+//
+//      distTheta[0] = SensorsPoller.getCurrentDistance();
+//      System.out.println("right:" + distTheta[0]);
+//
+//      ultraSonicMotor.rotate(-120); // taken at the left
+//
+//
+//      distTheta[1] = SensorsPoller.getCurrentDistance();
+//      System.out.println("left:" + distTheta[1]);
+//
+//
+//      // if distance read on right is > distance read on left
+//      // when US reads left and right distance = 32, robot is close to left tunnel wall
+//      if ((distTheta[0] > distTheta[1]) || ((distTheta[1] < 33) && (distTheta[0] < 33))) {
+//
+//        leftMotor.setSpeed(120);
+//        rightMotor.setSpeed(50);
+//        leftMotor.forward();
+//        rightMotor.backward();
+//        try {
+//          Thread.sleep(250);
+//        } catch (InterruptedException e) {
+//          // TODO Auto-generated catch block
+//          e.printStackTrace();
+//        }
+//      } else if ((distTheta[0] < distTheta[1]) || ((distTheta[0] < 33) && (distTheta[1] > 32))) {
+//        rightMotor.setSpeed(110);
+//        leftMotor.setSpeed(50);
+//        leftMotor.backward();
+//        rightMotor.forward();
+//        try {
+//          Thread.sleep(250);
+//        } catch (InterruptedException e) {
+//          // TODO Auto-generated catch block
+//          e.printStackTrace();
+//        }
+//      } else {
+//        leftMotor.setSpeed(50);
+//        rightMotor.setSpeed(50);
+//        leftMotor.forward();
+//        rightMotor.forward();
+//        try {
+//          Thread.sleep(250);
+//        } catch (InterruptedException e) {
+//          // TODO Auto-generated catch block
+//          e.printStackTrace();
+//        }
+//      }
+//      // if(odometer.getXYT()[1] > (4 + 1) * Resources.TILE_SIZE ) { //get to a good position away from the tunnel
+//      // leftMotor.stop(true);
+//      // rightMotor.stop(false);
+//      // Navigation.travelTo(3*Resources.TILE_SIZE,(5) * Resources.TILE_SIZE ); //change to coordinates tunnel
+//      // break;
+//      // }
+//    }
+  
+   //Third alternative yet to be tested 
     while (true) {
+      
+       leftMotor.rotate(Navigation.convertDistance(0.5*Resources.TILE_SIZE), true); //always drive forward half a tile
+       rightMotor.rotate(Navigation.convertDistance(0.5*Resources.TILE_SIZE), false);
+       
+       leftMotor.stop(true);
+       rightMotor.stop();
+       
+       ultraSonicMotor.rotate(120); // distance taken at right
+
+       distTheta[0] = SensorsPoller.getCurrentDistance();
+       System.out.println("right:" + distTheta[0]);
+
+       ultraSonicMotor.rotate(-120); // distance taken at the left
 
 
-      // Option 2 for tunnel nav
-      /*
-       * leftMotor.forward(); rightMotor.forward(); System.out.println(SensorsPoller.getCurrentDistance());
-       * 
-       * if(SensorsPoller.getCurrentDistance() < 33) { System.out.println("Here=" + SensorsPoller.getCurrentDistance());
-       * leftMotor.setSpeed(200); rightMotor.setSpeed(206); leftMotor.backward(); rightMotor.forward(); }else {
-       * leftMotor.setSpeed(rightMotor.getSpeed()); leftMotor.forward(); rightMotor.forward(); }
-       */
-
-      // Option 1 sweeping sensor implementation
-      leftMotor.setSpeed(50);
-      rightMotor.setSpeed(50);
-      leftMotor.forward();
-      rightMotor.forward();
-
-      ultraSonicMotor.rotate(120); // taken at right
-
-      distTheta[0] = SensorsPoller.getCurrentDistance();
-      System.out.println("right:" + distTheta[0]);
-
-      ultraSonicMotor.rotate(-120); // taken at the left
-
-
-      distTheta[1] = SensorsPoller.getCurrentDistance();
-      System.out.println("left:" + distTheta[1]);
-
-
-      // if distance read on right is > distance read on left
-      // when US reads left and right distance = 32, robot is close to left tunnel wall
-      if ((distTheta[0] > distTheta[1]) || ((distTheta[1] < 33) && (distTheta[0] < 33))) {
-
-        leftMotor.setSpeed(120);
-        rightMotor.setSpeed(50);
-        leftMotor.forward();
-        rightMotor.backward();
-        try {
-          Thread.sleep(250);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-      } else if ((distTheta[0] < distTheta[1]) || ((distTheta[0] < 33) && (distTheta[1] > 32))) {
-        rightMotor.setSpeed(110);
-        leftMotor.setSpeed(50);
-        leftMotor.backward();
-        rightMotor.forward();
-        try {
-          Thread.sleep(250);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-      } else {
-        leftMotor.setSpeed(50);
-        rightMotor.setSpeed(50);
-        leftMotor.forward();
-        rightMotor.forward();
-        try {
-          Thread.sleep(250);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-      }
-      // if(odometer.getXYT()[1] > (4 + 1) * Resources.TILE_SIZE ) { //get to a good position away from the tunnel
-      // leftMotor.stop(true);
-      // rightMotor.stop(false);
-      // Navigation.travelTo(3*Resources.TILE_SIZE,(5) * Resources.TILE_SIZE ); //change to coordinates tunnel
-      // break;
-      // }
+       distTheta[1] = SensorsPoller.getCurrentDistance();
+       System.out.println("left:" + distTheta[1]);
+       
+       if (distTheta[0] > 255 && distTheta[1] > 255) { //base case to exit the tunnel sweeping mode
+//         you can reset the speed of motors back to normal here since we are out of the tunnel
+         break;
+       }
+       if ((distTheta[0] > distTheta[1]) || ((distTheta[1] < 33) && (distTheta[0] < 33))) { //close to left wall
+         
+         leftMotor.rotate(-Navigation.convertAngle(2), true); // check this value
+         rightMotor.rotate(Navigation.convertAngle(2), false);
+                
+                 
+       } else if ((distTheta[0] < distTheta[1]) || ((distTheta[0] < 33) && (distTheta[1] > 32))) {//close to right wall
+         leftMotor.rotate(Navigation.convertAngle(2), false); // check this value
+         rightMotor.rotate(-Navigation.convertAngle(2), true);
+               
+       } else {
+        continue; // can be refactored but basically go forward. Speed can be reset here as well.
+        
+       }
+       
     }
 
   }
