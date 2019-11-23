@@ -38,30 +38,43 @@ public class Main implements Runnable{
     public void run() {
         //US localization
     	Localization.fallingEdge();
-
+    	try {
+        Thread.sleep(100);
+      } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    	SensorsPoller.resetGyro(0);
+        try {
+        Thread.sleep(100);
+      } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
         // Rotates to point, moves there, light localizes
-        if (greenTeam == 15) {
-            Localization.travelUntilLineHit(315);
-            Localization.centralizeAtPoint(TILE_SIZE * 7, TILE_SIZE * 1);
-            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
-        } else {
-            Localization.travelUntilLineHit(135);
-            Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 7);
-            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 90);
-        }
+//        if (greenTeam == 15) {
+//            Localization.travelUntilLineHit(315);
+//            Localization.centralizeAtPoint(TILE_SIZE * 7, TILE_SIZE * 1);
+//            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
+//        } else {
+//            Localization.travelUntilLineHit(135);
+//   
+            Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 1);
+            odometer.setXYT(1 * TILE_SIZE, 1 * TILE_SIZE, SensorsPoller.getCurrentAngle());
+////        }
 
         // Moves to entrance of tunnel
         TunnelNavigation.entranceOfTunnel();
 
-        TunnelNavigation.goThroughTunnel();
+//        TunnelNavigation.goThroughTunnel();
 
         // If we want to shoot
         // TunnelNavigation.shootingPoint();
 
         // If we don't want to shoot
-        Navigation.turnTo(odometer.getXYT()[2] + 180);
-        TunnelNavigation.goThroughTunnel();
-//    	
+//        Navigation.turnTo(odometer.getXYT()[2] + 180);
+//        TunnelNavigation.goThroughTunnel();
+////    	
     	
     	
     	

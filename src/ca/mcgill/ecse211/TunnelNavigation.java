@@ -30,8 +30,8 @@ public class TunnelNavigation {
     // }
 
     // Testing
-    Navigation.travelTo((6) * TILE_SIZE, (4 - 1) * TILE_SIZE); // should be dependent on the tile and tunnel location
-    Localization.centralizeAtPoint((6) * TILE_SIZE, (4 - 1) * TILE_SIZE);
+    Navigation.travelTo((4  ) * TILE_SIZE, (3 - 1) * TILE_SIZE); // should be dependent on the tile and tunnel location
+    Localization.centralizeAtPoint((4) * TILE_SIZE, (3 - 1) * TILE_SIZE);
   }
 
   // todo, need to add doging algorithm

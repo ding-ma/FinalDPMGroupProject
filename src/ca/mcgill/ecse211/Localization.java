@@ -41,6 +41,9 @@ public class Localization {
             rightMotor.forward();
         }
         
+        leftMotor.stop(true);
+        rightMotor.stop(false);
+        sleep(100);
         //Record first ange
         angle1 = odometer.getXYT()[2];
         
@@ -61,6 +64,9 @@ public class Localization {
             rightMotor.backward();
         }
         
+        leftMotor.stop(true);
+        rightMotor.stop(false);
+        sleep(100);
         //Record second angle
         angle2 = odometer.getXYT()[2]; 
         
@@ -81,12 +87,13 @@ public class Localization {
         leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
         rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
 
-        if (greenTeam == 15) {
-            odometer.setXYT(0.0, 0.0, 270);
-        }
-        else {
-            odometer.setXYT(0.0,0.0, 90);
-        }        
+        odometer.setTheta(0);
+//        if (greenTeam == 15) {
+//            odometer.setXYT(0.0, 0.0, 270);
+//        }
+//        else {
+//            odometer.setXYT(0.0,0.0, 90);
+//        }        
     }
     
     public static void travelUntilLineHit(int turnAngle) {
@@ -163,9 +170,9 @@ public class Localization {
 //            Navigation.turnTo(-20); // robot always under turns to right
 //        }
         
-        odometer.setXYT(xCoord, yCoord, odometer.getXYT()[2]);
+        odometer.setXYT(xCoord, yCoord, SensorsPoller.getCurrentAngle());
         Navigation.turnTo(0);
-
+        odometer.setTheta(SensorsPoller.getCurrentAngle());
 //        //todo, fix ressources for team number with wifi server
 //        if (Resources.greenTeam == 15) {
 //            odometer.setXYT(8 * TILE_SIZE, 1 * TILE_SIZE, 270);

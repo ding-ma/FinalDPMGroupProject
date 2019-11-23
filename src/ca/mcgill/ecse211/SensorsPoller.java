@@ -8,7 +8,7 @@ public class SensorsPoller implements Runnable{
     private float[] previousLight = new float[Resources.COLOR_SENSOR.sampleSize()];
     
     
-    private static double currentAngle;
+    private static double currentAngle =0;
     private static int currentDistance;
     private static double currentLightIntensity;
     private static double previousLightIntensity;
@@ -55,6 +55,10 @@ public class SensorsPoller implements Runnable{
     		distance = 100;
         currentDistance = distance;
     }
+    public static void resetGyro(double offset) {
+      Resources.GYRO_SENSOR.reset();
+      angleOffSet = offset;
+    }
     
     private void setCurrentLightIntensity(double lightIntensity){
         currentLightIntensity = lightIntensity;
@@ -64,7 +68,7 @@ public class SensorsPoller implements Runnable{
     }
     
     public static double getCurrentAngle() {
-        return currentAngle;
+        return (currentAngle + angleOffSet) % 359;
     }
     
     public static int getCurrentDistance(){

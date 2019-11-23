@@ -39,7 +39,7 @@ public class Display implements Runnable {
             LCD.drawString("X: " + numberFormat.format(position[0]), 0, 0);
             LCD.drawString("Y: " + numberFormat.format(position[1]), 0, 1);
             LCD.drawString("T: " + numberFormat.format(position[2]), 0, 2);
-            
+            LCD.drawString("G: " + numberFormat.format(SensorsPoller.getCurrentAngle()), 0, 3);
             // this ensures that the data is updated only once every period
             updateEnd = System.currentTimeMillis();
             if (updateEnd - updateStart < DISPLAY_PERIOD) {
