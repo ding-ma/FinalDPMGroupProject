@@ -1,6 +1,7 @@
 package ca.mcgill.ecse211;
 
 import lejos.hardware.Button;
+import lejos.hardware.Sound;
 
 import static ca.mcgill.ecse211.Resources.*;
 
@@ -35,11 +36,11 @@ public class Main implements Runnable{
     
     @Override
     public void run() {
-//    	Localization.fallingEdge();
-//    	Localization.travelUntilLineHit(45);
-//    	Localization.centralizeAtPoint(35.48, 35.48);
-//        odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
-//        TunnelNavigation.entranceOfTunnel();
+    	Localization.fallingEdge();
+    	Localization.travelUntilLineHit(45);
+    	Localization.centralizeAtPoint(35.48, 35.48);
+        odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
+        TunnelNavigation.entranceOfTunnel();
 //    	
     	
     	
@@ -167,7 +168,7 @@ public class Main implements Runnable{
 ////        Navigation.turnTo(-35); //it seemed to under turn after localization so this fixes it.
 //        odometer.setTheta(0);   //should be facing zero by this point.
 ////     
-      TunnelNavigation.goThroughTunnel();
+ //     TunnelNavigation.goThroughTunnel();
 //      Localization.centralizeAtPoint(3*Resources.TILE_SIZE, (4+1)*Resources.TILE_SIZE); //it has exited the tunnel and is at the nearest safe zone
 //      
 //        

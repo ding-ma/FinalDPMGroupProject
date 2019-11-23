@@ -18,17 +18,17 @@ public class Localization {
     }
     
     public static void fallingEdge() {
-        leftMotor.setSpeed(ROTATE_SPEED);
-        rightMotor.setSpeed(ROTATE_SPEED);
+        leftMotor.setSpeed(MOTOR_LOW);
+        rightMotor.setSpeed(MOTOR_LOW);
         
         double angle1;
         double angle2;
         double turnAngle;
-        //fixes bug when us sensor is pointing at wall
         while (SensorsPoller.getCurrentDistance() < 75) {
             leftMotor.backward();
             rightMotor.forward();
         }
+        
         //Rotate to face away from the wall
         while (SensorsPoller.getCurrentDistance() < distFallingEdge + tolFallingEdge) {
             leftMotor.backward();
@@ -40,15 +40,15 @@ public class Localization {
             leftMotor.backward();
             rightMotor.forward();
         }
-    
-    
-        //Record first angle
+        
+        //Record first ange
         angle1 = odometer.getXYT()[2];
         
         while (SensorsPoller.getCurrentDistance() < 75) {
             leftMotor.forward();
             rightMotor.backward();
         }
+        
         //Rotate to face away from the wall
         while (SensorsPoller.getCurrentDistance() < distFallingEdge + tolFallingEdge) {
             leftMotor.forward();
@@ -62,9 +62,9 @@ public class Localization {
         }
         
         //Record second angle
-        angle2 = odometer.getXYT()[2];
+        angle2 = odometer.getXYT()[2]; 
         
-        double dTheta = 0;
+        double dTheta = 3;
         //Compute the angle:
         //Case 1: The first angle is smaller than the second
         if (angle1 < angle2) {
@@ -76,11 +76,10 @@ public class Localization {
             dTheta = 225 - (angle1 + angle2) / 2;
         }
         turnAngle = dTheta + odometer.getXYT()[2];
-        
+
         //Turn to 0 degrees
         leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
         rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
-        //      Navigation.turnTo(-3);
         odometer.setXYT(0.0, 0.0, 0.0);
         
     }
@@ -119,14 +118,19 @@ public class Localization {
         double angleY;
         leftMotor.setSpeed(MOTOR_LOW);
         rightMotor.setSpeed(MOTOR_LOW);
+        boolean onlyHitOnce = false;
         while (currLineDetected < 4) {
             // Rotate in place to find the next line.
             leftMotor.backward();
             rightMotor.forward();
-            if (SensorsPoller.getCurrentLightIntensity() < 0.3) { //Compare intensities
+            if (SensorsPoller.getIsLineHit() == true && !onlyHitOnce) { //Compare intensities
                 angleAtLines[currLineDetected] = odometer.getXYT()[2];
                 currLineDetected++;
+                onlyHitOnce = true;
                 Sound.beep();
+            } 
+            if(SensorsPoller.getIsLineHit()== false){
+            	onlyHitOnce = false;
             }
         }
         // Stops the motors

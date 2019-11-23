@@ -37,6 +37,61 @@ public class Navigation {
     }
     
     /**
+     * Check if the robot can avoid right or left depending on the current X,Y and Theta
+     *
+     * @param curX: current X
+     * @param curY: current Y
+     * @return: dodge right or left
+     */
+
+    private static boolean canAvoidRight() {
+        double[] currLocation = odometer.getXYT();
+
+        double curX = currLocation[0];
+        double curY = currLocation[1];
+        currentTheta = currLocation[2];
+
+        currentTheta = odometer.getXYT()[2];
+        // there are 4 cases
+        if (currentTheta > 315 || currentTheta < 45) { // case 1: going up
+            return (curX < TILE_SIZE * (island.ll.x + (island.ur.x - island.ll.x)/2));
+        } else if (currentTheta > 225 && currentTheta < 315) { // case 2: going left 
+            return (curY < TILE_SIZE * (island.ll.y + (island.ur.y - island.ll.y)/2));
+        } else if (currentTheta > 135 && currentTheta < 225) { // case 3: going  down 
+            return (curX > TILE_SIZE * (island.ll.x + (island.ur.x - island.ll.x)/2));
+        } else if (currentTheta > 45 && currentTheta < 135) { // case 4: going right 
+            return (curY > TILE_SIZE * (island.ll.y + (island.ur.y - island.ll.y)/2));
+        }
+        return true; // default true
+    }
+    
+    /**
+     * Turn 90 degrees right and move 1 tile over
+     */
+    private static void avoidRight() {
+        leftMotor.setSpeed(ROTATE_SPEED);
+        rightMotor.setSpeed(ROTATE_SPEED);
+        leftMotor.rotate(convertAngle(90), true);
+        rightMotor.rotate(-convertAngle(90), false);
+
+        leftMotor.rotate((int) TILE_SIZE, true);
+        rightMotor.rotate((int)TILE_SIZE, false);
+    }
+
+    /**
+     * Turn 90 degrees left and move 1 tile over
+     */
+    private static void avoidLeft() {
+        leftMotor.setSpeed(ROTATE_SPEED);
+        rightMotor.setSpeed(ROTATE_SPEED);
+        leftMotor.rotate(-convertAngle(90), true);
+        rightMotor.rotate(convertAngle(90), false);
+
+        leftMotor.rotate((int)TILE_SIZE, true);
+        rightMotor.rotate((int)TILE_SIZE, false);
+    }
+    
+    /**
      * Travel towards the destination specified in the wayPoint.
      *
      * @param x: the x coordinate of the final destination

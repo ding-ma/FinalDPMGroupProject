@@ -51,6 +51,8 @@ public class SensorsPoller implements Runnable{
     }
     
     private void setUsData(int distance){
+    	if(distance > 100)
+    		distance = 100;
         currentDistance = distance;
     }
     
