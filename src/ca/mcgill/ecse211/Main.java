@@ -42,11 +42,11 @@ public class Main implements Runnable{
         // Rotates to point, moves there, light localizes
         if (greenTeam == 15) {
             Localization.travelUntilLineHit(315);
-            Localization.centralizeAtPoint(TILE_SIZE * 7), TILE_SIZE * 1);
+            Localization.centralizeAtPoint(TILE_SIZE * 7, TILE_SIZE * 1);
             odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
         } else {
             Localization.travelUntilLineHit(135);
-            Localization.centralizeAtPoint(TILE_SIZE * 1), TILE_SIZE * 7);
+            Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 7);
             odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 90);
         }
 

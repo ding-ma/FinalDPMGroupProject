@@ -202,34 +202,34 @@ public class TunnelNavigation {
 
   public static void shootingPoint(){
 
-      Navigation.turnToXY(ourBin.x, ourBin.y); 
-      Sound.beep();   
-
-      double[] currLocation = odometer.getXYT();
-
-      if (Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) < SHOOTING_DISTANCE) {
-          Navigation.turnTo(currLocation[2] + 180);
-      } 
-
-      while (abs(Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) - SHOOTING_DISTANCE < ERROR_ALLOWED)) {
-          rightMotor.forward();
-          leftMotor.forward();
-
-          if (SensorsPoller.getCurrentDistance() < 15 ) {
-              if (Navigation.canAvoidRight()){
-                  avoidRight();
-              }
-              else {
-                  avoidLeft();
-              }
-          }
-          currLocation = odometer.getXYT();
-
-          Navigation.turnToXY(ourBin.x, ourBin.y); 
-          if (Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) < SHOOTING_DISTANCE) {
-            Navigation.turnTo(currLocation[2] + 180);
-          } 
-      }
+//      Navigation.turnToXY(ourBin.x, ourBin.y); 
+//      Sound.beep();   
+//
+//      double[] currLocation = odometer.getXYT();
+//
+//      if (Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) < SHOOTING_DISTANCE) {
+//          Navigation.turnTo(currLocation[2] + 180);
+//      } 
+//
+//      while (abs(Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) - SHOOTING_DISTANCE < ERROR_ALLOWED)) {
+//          rightMotor.forward();
+//          leftMotor.forward();
+//
+//          if (SensorsPoller.getCurrentDistance() < 15 ) {
+//              if (Navigation.canAvoidRight()){
+//                  avoidRight();
+//              }
+//              else {
+//                  avoidLeft();
+//              }
+//          }
+//          currLocation = odometer.getXYT();
+//
+//          Navigation.turnToXY(ourBin.x, ourBin.y); 
+//          if (Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) < SHOOTING_DISTANCE) {
+//            Navigation.turnTo(currLocation[2] + 180);
+//          } 
+//      }
 
       firePingPongBall();
   }
