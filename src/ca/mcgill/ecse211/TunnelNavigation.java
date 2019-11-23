@@ -9,27 +9,29 @@ public class TunnelNavigation {
     double currentX = odometer.getXYT()[0];
     double currentY = odometer.getXYT()[1];
 
+    // ACTUAL FUNCTION, REST IS TESTING
+    // Moves to centre of 1 block before entrance of tunnel and turns toward tunnel
+
     // if (greenTeam == 15) {
-    // Navigation.travelTo((4-1)*30.48, currentY);
-    // Navigation.travelTo((3) * 30.48, (3 - 1) * 30.48);
     // move horizontally first
-    // Navigation.travelTo((tng.ll.x-1)*30.48, currentY);
-    // Navigation.travelTo((tng.ll.x-1)*30.48, (tng.ll.y-1)*30.48);
+    // Navigation.travelTo((tng.ll.x + 1)*TILE_SIZE, currentY);
+    // Navigation.travelTo((tng.ll.x + 1)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
+    // Localization.centralizeAtPoint((tng.ll.x + 1)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
+    // Navigation.travelTo((tng.ll.x + 0.5)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
+    // Navigation.turnTo(0);
     // }
     // else {
     // //move vertically first
-    // Navigation.travelTo(currentX, (tnr.ll.y)*30.48)
-    // Navigation.travelTo((tnr.ll.x-1)*30.48, (tnr.ll.y)*30.48)
+    // Navigation.travelTo(currentX, (tnr.ll.y + 1)*TILE_SIZE)
+    // Navigation.travelTo((tnr.ll.x-1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE);
+    // Localization.centralizeAtPoint((tnr.ll.x - 1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE);
+    // Navigation.travelTo((tnr.ll.x - 1)*TILE_SIZE, (tnr.ll.y + 0.5)*TILE_SIZE);
+    // Navigation.turnTo(90);
     // }
 
-    // Test coordinates below
-    Navigation.travelTo((6) * 30.48, (4 - 1) * 30.48); // should be dependent on the tile and tunnel location
-    Localization.centralizeAtPoint((6) * 30.48, (4 - 1) * 30.48);
-
-  }
-
-  public static void exitOfTunnel(double xTopRight, double yTopRight) {
-
+    // Testing
+    Navigation.travelTo((6) * TILE_SIZE, (4 - 1) * TILE_SIZE); // should be dependent on the tile and tunnel location
+    Localization.centralizeAtPoint((6) * TILE_SIZE, (4 - 1) * TILE_SIZE);
   }
 
   // todo, need to add doging algorithm
@@ -42,24 +44,20 @@ public class TunnelNavigation {
 
     // if (greenTeam == 15) {
     // move horizontally first
-    // entrance of tunnel
-    // Navigation.travelTo((3 + 0.5) * 30.48, currentY);
-    // through tunnel
-    // Navigation.travelTo((3 + 0.5) * 30.48, (5 + 0.5) * 30.48);
-    // Navigation.travelTo((tng.ll.x+0.5)*30.48, currentY);
-    // Navigation.travelTo((tng.ll.x+0.5)*30.48, (tng.ur.y+0.5)*30.48);
+    // Navigation.travelTo((tng.ll.x+0.5)*TILE_SIZE, currentY);
+    // Navigation.travelTo((tng.ll.x+0.5)*TILE_SIZE, (tng.ur.y+0.5)*TILE_SIZE);
     // }
     // else {
     // //move vertically first
-    // Navigation.travelTo(currentX, (tnr.ll.y+0.5)*30.48)
-    // Navigation.travelTo((tnr.ur.x+0.5)*30.48, (tnr.ll.y+0.5)*30.48)
+    // Navigation.travelTo(currentX, (tnr.ll.y+0.5)*TILE_SIZE);
+    // Navigation.travelTo((tnr.ur.x+0.5)*TILE_SIZE, (tnr.ll.y+0.5)*TILE_SIZE);
     // }
 
-
-     Navigation.turnTo(90); 
-     leftMotor.rotate(Navigation.convertDistance(0.5*Resources.TILE_SIZE), true); 
-     //this should get the robot positioned in the centerwe
-     rightMotor.rotate(Navigation.convertDistance(0.5*Resources.TILE_SIZE), false);
+    //Testing
+    Navigation.turnTo(90); 
+    leftMotor.rotate(Navigation.convertDistance(0.5*Resources.TILE_SIZE), true); 
+    //this should get the robot positioned in the centerwe
+    rightMotor.rotate(Navigation.convertDistance(0.5*Resources.TILE_SIZE), false);
      
      
 //     Navigation.turnTo(0);
@@ -207,7 +205,7 @@ public class TunnelNavigation {
       Navigation.turnToXY(ourBin.x, ourBin.y); 
       Sound.beep();   
 
-      var currLocation = odometer.getXYT();
+      double[] currLocation = odometer.getXYT();
 
       if (Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) < SHOOTING_DISTANCE) {
           Navigation.turnTo(currLocation[2] + 180);
@@ -224,10 +222,17 @@ public class TunnelNavigation {
               else {
                   avoidLeft();
               }
-              
           }
           currLocation = odometer.getXYT();
+
+          Navigation.turnToXY(ourBin.x, ourBin.y); 
+          if (Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) < SHOOTING_DISTANCE) {
+            Navigation.turnTo(currLocation[2] + 180);
+          } 
       }
+
+      firePingPongBall();
+  }
 
   public static void firePingPongBall() {
     // motor rotate so it touches the sensor

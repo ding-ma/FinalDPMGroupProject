@@ -80,8 +80,13 @@ public class Localization {
         //Turn to 0 degrees
         leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
         rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
-        odometer.setXYT(0.0, 0.0, 0.0);
-        
+
+        if (greenTeam == 15) {
+            odometer.setXYT(0.0, 0.0, 270);
+        }
+        else {
+            odometer.setXYT(0.0,0.0, 90);
+        }        
     }
     
     public static void travelUntilLineHit(int turnAngle) {

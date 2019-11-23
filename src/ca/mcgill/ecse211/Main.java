@@ -36,11 +36,31 @@ public class Main implements Runnable{
     
     @Override
     public void run() {
+        //US localization
     	Localization.fallingEdge();
-    	Localization.travelUntilLineHit(45);
-    	Localization.centralizeAtPoint(35.48, 35.48);
-        odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
+
+        // Rotates to point, moves there, light localizes
+        if (greenTeam == 15) {
+            Localization.travelUntilLineHit(315);
+            Localization.centralizeAtPoint(TILE_SIZE * 7), TILE_SIZE * 1);
+            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
+        } else {
+            Localization.travelUntilLineHit(135);
+            Localization.centralizeAtPoint(TILE_SIZE * 1), TILE_SIZE * 7);
+            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 90);
+        }
+
+        // Moves to entrance of tunnel
         TunnelNavigation.entranceOfTunnel();
+
+        TunnelNavigation.goThroughTunnel();
+
+        // If we want to shoot
+        // TunnelNavigation.shootingPoint();
+
+        // If we don't want to shoot
+        Navigation.turnTo(odometer.getXYT()[2] + 180);
+        TunnelNavigation.goThroughTunnel();
 //    	
     	
     	
