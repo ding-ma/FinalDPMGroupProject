@@ -77,13 +77,13 @@ public class Main implements Runnable{
         
         // If we don't want to shoot
         if (greenTeam == 15) {
-            Localization.travelUntilLineHit(45);
+            Localization.travelUntilLineHit(90);
             Localization.centralizeAtPoint(tng.ur.x, tng.ur.y + 1);
             Navigation.travelTo(tng.ur.x - 0.5, tng.ur.y + 1);
             Navigation.turnTo(180);
 
         } else {
-            Localization.travelUntilLineHit(45);
+            Localization.travelUntilLineHit(0);
             Localization.centralizeAtPoint(tnr.ur.x + 1, tng.ur.y);
             Navigation.travelTo(tng.ur.x + 1, tng.ur.y - 0.5);
             Navigation.turnTo(270);
