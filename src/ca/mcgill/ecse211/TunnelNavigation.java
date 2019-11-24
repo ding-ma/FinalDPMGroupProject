@@ -30,15 +30,16 @@ public class TunnelNavigation {
         // else {
         // //move vertically first
         // Navigation.travelTo(currentX, (tnr.ll.y + 1)*TILE_SIZE)
-        // Navigation.travelTo((tnr.ll.x-1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE);
+        // Navigation.travelTo((tnr.ll.x-1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE); //
         // Localization.centralizeAtPoint((tnr.ll.x - 1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE);
         // Navigation.travelTo((tnr.ll.x - 1)*TILE_SIZE, (tnr.ll.y + 0.5)*TILE_SIZE);
         // Navigation.turnTo(90);
         // }
         
         // Testing
-        Navigation.travelTo((4) * TILE_SIZE, (3 - 1) * TILE_SIZE); // should be dependent on the tile and tunnel location
-        Localization.centralizeAtPoint((4) * TILE_SIZE, (3 - 1) * TILE_SIZE);
+        Navigation.travelTo((6) * TILE_SIZE, (4) * TILE_SIZE); // should be dependent on the tile and tunnel location
+        Localization.travelUntilLineHit(45);// this depends on the team we are on. 45 for testing purposes.
+        Localization.centralizeAtPoint((6) * TILE_SIZE, (4) * TILE_SIZE);
     }
     
     // todo, need to add doging algorithm
@@ -65,10 +66,14 @@ public class TunnelNavigation {
         // }
         
         //Testing
-        Navigation.turnTo(90);
-        leftMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), true);
+//        Navigation.turnTo(90);
+//        leftMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), true);
+//        rightMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), false);
+//        
+//        Navigation.turnTo(0);
         //this should get the robot positioned in the centerwe
-        rightMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), false);
+//        leftMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), true);
+//        rightMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), false);
 
 
 //     Navigation.turnTo(0);
@@ -78,8 +83,8 @@ public class TunnelNavigation {
         //
         leftMotor.stop(true);
         rightMotor.stop(false);
-        leftMotor.setSpeed(100);
-        rightMotor.setSpeed(100);
+        leftMotor.setSpeed(200);
+        rightMotor.setSpeed(200);
         
         // leftMotor.rotate(Navigation.convertDistance(1.2*Resources.TILE_SIZE), true); //this should get the robot
         // positioned in the centerwe
@@ -167,12 +172,12 @@ public class TunnelNavigation {
 //      // break;
 //      // }
 //    }
-        
+       int counter = 0; 
         //Third alternative yet to be tested
-        while (true) {
+        while (!SensorsPoller.getIsLineHit() && counter != 2) {
             
-            leftMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), true); //always drive forward half a tile
-            rightMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), false);
+            leftMotor.rotate(Navigation.convertDistance(0.25 * Resources.TILE_SIZE), true); //always drive forward half a tile
+            rightMotor.rotate(Navigation.convertDistance(0.25 * Resources.TILE_SIZE), false);
             
             leftMotor.stop(true);
             rightMotor.stop();
@@ -188,19 +193,27 @@ public class TunnelNavigation {
             distTheta[1] = SensorsPoller.getCurrentDistance();
             System.out.println("left:" + distTheta[1]);
             
-            if (distTheta[0] > 255 && distTheta[1] > 255) { //base case to exit the tunnel sweeping mode
+            if (SensorsPoller.getIsLineHit() && counter != 2) { //base case to exit the tunnel sweeping mode
 //         you can reset the speed of motors back to normal here since we are out of the tunnel
-                break;
+              counter++;
+            }else if(SensorsPoller.getIsLineHit() && counter == 2){
+              break;
             }
+            
+            if(distTheta[0] > 99 && distTheta[1] < 50) {    
+              leftMotor.stop(true);
+              rightMotor.rotate(Navigation.convertAngle(15), true);
+            }
+            
             if ((distTheta[0] > distTheta[1]) || ((distTheta[1] < 33) && (distTheta[0] < 33))) { //close to left wall
                 
-                leftMotor.rotate(-Navigation.convertAngle(2), true); // check this value
-                rightMotor.rotate(Navigation.convertAngle(2), false);
+                leftMotor.rotate(Navigation.convertAngle(15), true); // check this value
+                rightMotor.rotate(-Navigation.convertAngle(15), false);
                 
                 
             } else if ((distTheta[0] < distTheta[1]) || ((distTheta[0] < 33) && (distTheta[1] > 32))) {//close to right wall
-                leftMotor.rotate(Navigation.convertAngle(2), false); // check this value
-                rightMotor.rotate(-Navigation.convertAngle(2), true);
+                leftMotor.rotate(-Navigation.convertAngle(15), false); // check this value
+                rightMotor.rotate(Navigation.convertAngle(15), true);
                 
             } else {
                 continue; // can be refactored but basically go forward. Speed can be reset here as well.

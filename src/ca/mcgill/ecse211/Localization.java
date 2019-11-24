@@ -76,7 +76,7 @@ public class Localization {
         //Record second angle
         angle2 = odometer.getXYT()[2];
         
-        double dTheta = 3;
+        double dTheta = 0;
         //Compute the angle:
         //Case 1: The first angle is smaller than the second
         if (angle1 < angle2) {
@@ -90,8 +90,8 @@ public class Localization {
         turnAngle = dTheta + odometer.getXYT()[2];
         
         //Turn to 0 degrees
-        leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
-        rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
+        leftMotor.rotate(-Navigation.convertAngle(turnAngle)+20, true);
+        rightMotor.rotate(Navigation.convertAngle(turnAngle)-20, false);
         
         odometer.setTheta(0);
 //        if (greenTeam == 15) {
@@ -109,6 +109,7 @@ public class Localization {
      */
     public static void travelUntilLineHit(int turnAngle) {
         // Face origin
+        odometer.setTheta(SensorsPoller.getCurrentAngle());
         Navigation.turnTo(turnAngle);
         leftMotor.setSpeed(MOTOR_LOW);
         rightMotor.setSpeed(MOTOR_LOW);
@@ -170,7 +171,7 @@ public class Localization {
         
         odometer.setXYT(currentX + xCoord, currentY + yCoord, odometer.getXYT()[2]); // updates odo with current location compared to
         // origin
-        if(!(angleX < 3 && angleY <3)) {
+        if(!(Math.abs(angleX) < 3 && Math.abs(angleY )< 3)) {
             Navigation.travelTo(xCoord, yCoord); // make it travel to origin
         }
         

@@ -3,6 +3,7 @@ package ca.mcgill.ecse211;
 import lejos.hardware.Button;
 
 import static ca.mcgill.ecse211.Resources.*;
+import java.util.Arrays;
 
 /**
  * Main class that drives all the code.
@@ -40,36 +41,37 @@ public class Main implements Runnable{
     @Override
     public void run() {
         //US localization
-        Localization.fallingEdge();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        SensorsPoller.resetGyro(0);
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        // Rotates to point, moves there, light localizes
-//        if (greenTeam == 15) {
-//            Localization.travelUntilLineHit(315);
-//            Localization.centralizeAtPoint(TILE_SIZE * 7, TILE_SIZE * 1);
-//            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
-//        } else {
-//            Localization.travelUntilLineHit(135);
-//   
-        Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 1);
-        odometer.setXYT(1 * TILE_SIZE, 1 * TILE_SIZE, SensorsPoller.getCurrentAngle());
-////        }
-        
-        // Moves to entrance of tunnel
-        TunnelNavigation.entranceOfTunnel();
+//        Localization.fallingEdge();
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        SensorsPoller.resetGyro(0);
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        // Rotates to point, moves there, light localizes
+////        if (greenTeam == 15) {
+////            Localization.travelUntilLineHit(315);
+////            Localization.centralizeAtPoint(TILE_SIZE * 7, TILE_SIZE * 1);
+////            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
+////        } else {
+//            Localization.travelUntilLineHit(45);
+////   
+//        Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 1);
+////        odometer.setXYT(1 * TILE_SIZE, 1 * TILE_SIZE, SensorsPoller.getCurrentAngle());
+////////        }
+////        
+//        System.out.println(Arrays.toString(odometer.getXYT()));
+//        // Moves to entrance of tunnel
+//        TunnelNavigation.entranceOfTunnel();
 
-//        TunnelNavigation.goThroughTunnel();
+        TunnelNavigation.goThroughTunnel();
         
         // If we want to shoot
         // TunnelNavigation.shootingPoint();
