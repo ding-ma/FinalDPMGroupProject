@@ -4,6 +4,9 @@ import lejos.hardware.Sound;
 
 import static ca.mcgill.ecse211.Resources.*;
 
+/**
+ * Localization methods in order to centralize the robot at a specific point
+ */
 public class Localization {
     static double[] angleAtLines = new double[4];
     
@@ -17,6 +20,9 @@ public class Localization {
         return -Math.abs(SENSOR_LOCATION * Math.cos(Math.toRadians(angle / 2)));
     }
     
+    /**
+     * Performs falling edge localization
+     */
     public static void fallingEdge() {
         leftMotor.setSpeed(MOTOR_LOW);
         rightMotor.setSpeed(MOTOR_LOW);
@@ -68,7 +74,7 @@ public class Localization {
         rightMotor.stop(false);
         sleep(100);
         //Record second angle
-        angle2 = odometer.getXYT()[2]; 
+        angle2 = odometer.getXYT()[2];
         
         double dTheta = 3;
         //Compute the angle:
@@ -82,11 +88,11 @@ public class Localization {
             dTheta = 225 - (angle1 + angle2) / 2;
         }
         turnAngle = dTheta + odometer.getXYT()[2];
-
+        
         //Turn to 0 degrees
         leftMotor.rotate(-Navigation.convertAngle(turnAngle), true);
         rightMotor.rotate(Navigation.convertAngle(turnAngle), false);
-
+        
         odometer.setTheta(0);
 //        if (greenTeam == 15) {
 //            odometer.setXYT(0.0, 0.0, 270);
@@ -96,14 +102,19 @@ public class Localization {
 //        }        
     }
     
+    /**
+     * travel until line is hit, for localization
+     *
+     * @param turnAngle: angle which we want to turn the robot
+     */
     public static void travelUntilLineHit(int turnAngle) {
         // Face origin
         Navigation.turnTo(turnAngle);
         leftMotor.setSpeed(MOTOR_LOW);
         rightMotor.setSpeed(MOTOR_LOW);
         while (true) {
-    
-    
+            
+            
             leftMotor.forward();
             rightMotor.forward();
             // Move backwards to put the rotation point on the line
@@ -113,13 +124,13 @@ public class Localization {
                 sleep(100);
                 leftMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), true);
                 rightMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), false);
-        
+                
                 Sound.beep();
                 break;
             }
         }
-     
-
+        
+        
     }
     
     public static void centralizeAtPoint(double xCoord, double yCoord){
@@ -140,30 +151,30 @@ public class Localization {
                 currLineDetected++;
                 onlyHitOnce = true;
                 Sound.beep();
-            } 
+            }
             if(SensorsPoller.getIsLineHit()== false){
-            	onlyHitOnce = false;
+                onlyHitOnce = false;
             }
         }
         // Stops the motors
         leftMotor.stop(true);
         rightMotor.stop(false);
-    
+        
         // Find out our angle using the difference of the lines.
         angleY = angleAtLines[2] - angleAtLines[0]; // Lines 0 and 2 are the vertical lines
         angleX = angleAtLines[3] - angleAtLines[1]; // Lines 1 and 3 are the horizontal lines
-    
+        
         // Get dx and dy
         currentX = currentLocation(angleY);
         currentY = currentLocation(angleX);
-    
+        
         odometer.setXYT(currentX + xCoord, currentY + yCoord, odometer.getXYT()[2]); // updates odo with current location compared to
         // origin
         if(!(angleX < 3 && angleY <3)) {
-          Navigation.travelTo(xCoord, yCoord); // make it travel to origin
+            Navigation.travelTo(xCoord, yCoord); // make it travel to origin
         }
-      
-    
+        
+        
         // Turn to face 0 degrees
         double currAngle = odometer.getXYT()[2];
 //        if (currAngle <= 360 && currAngle >= 2.0) {
@@ -181,7 +192,7 @@ public class Localization {
 //        if (Resources.greenTeam != 15) {
 //            odometer.setXYT(1 * TILE_SIZE, 14 * TILE_SIZE, 90);
 //        }
-      
+    
     }
     
     /**

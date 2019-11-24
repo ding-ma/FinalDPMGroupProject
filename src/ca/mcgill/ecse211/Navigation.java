@@ -44,7 +44,7 @@ public class Navigation {
      * @return: dodge right or left
      */
 
-    private static boolean canAvoidRight() {
+    public static boolean canAvoidRight() {
         double[] currLocation = odometer.getXYT();
 
         double curX = currLocation[0];
@@ -68,7 +68,7 @@ public class Navigation {
     /**
      * Turn 90 degrees right and move 1 tile over
      */
-    private static void avoidRight() {
+    public static void avoidRight() {
         leftMotor.setSpeed(ROTATE_SPEED);
         rightMotor.setSpeed(ROTATE_SPEED);
         leftMotor.rotate(convertAngle(90), true);
@@ -81,7 +81,7 @@ public class Navigation {
     /**
      * Turn 90 degrees left and move 1 tile over
      */
-    private static void avoidLeft() {
+    public static void avoidLeft() {
         leftMotor.setSpeed(ROTATE_SPEED);
         rightMotor.setSpeed(ROTATE_SPEED);
         leftMotor.rotate(-convertAngle(90), true);
@@ -162,7 +162,7 @@ public class Navigation {
      * @param x: Target x to turn to
      * @param y: Target Y to turn to
      */
-    void turntoXY(double x, double y) {
+    public static void turnToXY(double x, double y) {
         //Get initial coordinates
         double currentX = odometer.getXYT()[0];
         double currentY = odometer.getXYT()[1];
