@@ -1,7 +1,7 @@
 package ca.mcgill.ecse211;
 
 import lejos.hardware.Button;
-
+import lejos.hardware.Sound;
 import static ca.mcgill.ecse211.Resources.*;
 import java.util.Arrays;
 
@@ -40,6 +40,11 @@ public class Main implements Runnable{
     
     @Override
     public void run() {
+      while(true) {
+        if(SensorsPoller.getIsLineHit()) {
+          Sound.beep();
+        }
+      }
         //US localization
 //        Localization.fallingEdge();
 //        try {
@@ -71,7 +76,7 @@ public class Main implements Runnable{
 //        // Moves to entrance of tunnel
 //        TunnelNavigation.entranceOfTunnel();
 
-        TunnelNavigation.goThroughTunnel();
+    //    TunnelNavigation.goThroughTunnel();
         
         // If we want to shoot
         // TunnelNavigation.shootingPoint();
