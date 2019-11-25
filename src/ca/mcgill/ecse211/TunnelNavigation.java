@@ -121,11 +121,11 @@ public class TunnelNavigation {
      * Travel to the shooting Point in order to fire the ping-pong ball
      */
     public static void shootingPoint() {
-        Bin ourBin;
+        Point ourBin;
         if (greenTeam == 15) {
-            ourBin = new Bin(greenBin.x, greenBin.y);
+            ourBin = greenBin;
         } else {
-            ourBin = new Bin(redBin.x, redBin.y);
+            ourBin = redBin;
         }
         
         Navigation.turnToXY(ourBin.x, ourBin.y);

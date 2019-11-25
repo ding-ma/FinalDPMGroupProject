@@ -46,46 +46,55 @@ public class Main implements Runnable{
         }
       }
         //US localization
-//        Localization.fallingEdge();
-//        try {
-//            Thread.sleep(100);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        SensorsPoller.resetGyro(0);
-//        try {
-//            Thread.sleep(100);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        // Rotates to point, moves there, light localizes
-////        if (greenTeam == 15) {
-////            Localization.travelUntilLineHit(315);
-////            Localization.centralizeAtPoint(TILE_SIZE * 7, TILE_SIZE * 1);
-////            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
-////        } else {
-//            Localization.travelUntilLineHit(45);
-////   
-//        Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 1);
-////        odometer.setXYT(1 * TILE_SIZE, 1 * TILE_SIZE, SensorsPoller.getCurrentAngle());
-////////        }
-////        
-//        System.out.println(Arrays.toString(odometer.getXYT()));
-//        // Moves to entrance of tunnel
-//        TunnelNavigation.entranceOfTunnel();
+       Localization.fallingEdge();
+       try {
+           Thread.sleep(100);
+       } catch (InterruptedException e) {
+           // TODO Auto-generated catch block
+           e.printStackTrace();
+       }
+       SensorsPoller.resetGyro(0);
+       try {
+           Thread.sleep(100);
+       } catch (InterruptedException e) {
+           // TODO Auto-generated catch block
+           e.printStackTrace();
+       }
+       // Rotates to point, moves there, light localizes
+       if (greenTeam == 15) {
+            Localization.travelUntilLineHit(315);
+            Localization.centralizeAtPoint(TILE_SIZE * 7, TILE_SIZE * 1);
+            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
+        } else {
+            Localization.travelUntilLineHit(135);
+            Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 7);
+            odometer.setXYT(1 * TILE_SIZE, 7 * TILE_SIZE, 90);
+        }
+       
+       // Moves to entrance of tunnel
+        TunnelNavigation.entranceOfTunnel();
 
-    //    TunnelNavigation.goThroughTunnel();
+        // Goes through tunnel
+        TunnelNavigation.goThroughTunnel();
         
         // If we want to shoot
         // TunnelNavigation.shootingPoint();
         
         // If we don't want to shoot
-//        Navigation.turnTo(odometer.getXYT()[2] + 180);
-//        TunnelNavigation.goThroughTunnel();
-////    	
+        if (greenTeam == 15) {
+            Localization.travelUntilLineHit(90);
+            Localization.centralizeAtPoint(tng.ur.x, tng.ur.y + 1);
+            Navigation.travelTo(tng.ur.x - 0.5, tng.ur.y + 1);
+            Navigation.turnTo(180);
 
+        } else {
+            Localization.travelUntilLineHit(0);
+            Localization.centralizeAtPoint(tnr.ur.x + 1, tng.ur.y);
+            Navigation.travelTo(tng.ur.x + 1, tng.ur.y - 0.5);
+            Navigation.turnTo(270);
+        }
+
+       TunnelNavigation.goThroughTunnel(); 
 
 //      odometer.setXYT(30.48, 30.48,0);
 //      Navigation.travelTo(1* Resources.TILE_SIZE, 13*Resources.TILE_SIZE);

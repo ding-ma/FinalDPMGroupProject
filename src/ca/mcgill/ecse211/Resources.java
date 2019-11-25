@@ -407,20 +407,5 @@ public class Resources {
             return "(" + x + ", " + y + ")";
         }
         
-    }
-    
-    /**
-     * Represents the Bin in order to keep the code simpler
-     */
-    public static class Bin {
-        public double x;
-        public double y;
-        
-        public Bin(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-    
-    
+    }  
 }

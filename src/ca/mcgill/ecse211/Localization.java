@@ -182,17 +182,9 @@ public class Localization {
 //            Navigation.turnTo(-20); // robot always under turns to right
 //        }
         
-        odometer.setXYT(xCoord, yCoord, SensorsPoller.getCurrentAngle());
         Navigation.turnTo(0);
-        odometer.setTheta(SensorsPoller.getCurrentAngle());
-//        //todo, fix ressources for team number with wifi server
-//        if (Resources.greenTeam == 15) {
-//            odometer.setXYT(8 * TILE_SIZE, 1 * TILE_SIZE, 270);
-//        }
-//    
-//        if (Resources.greenTeam != 15) {
-//            odometer.setXYT(1 * TILE_SIZE, 14 * TILE_SIZE, 90);
-//        }
+        odometer.setXYT(xCoord, yCoord, SensorsPoller.getCurrentAngle());
+
     
     }
     
