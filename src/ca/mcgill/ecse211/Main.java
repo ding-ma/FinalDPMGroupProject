@@ -2,14 +2,14 @@ package ca.mcgill.ecse211;
 
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
+
 import static ca.mcgill.ecse211.Resources.*;
-import java.util.Arrays;
 
 /**
  * Main class that drives all the code.
  * Spawns the threads and the sequence of executions
  */
-public class Main implements Runnable{
+public class Main implements Runnable {
     public static void main(String[] args) {
         int buttonChoice;
         do {
@@ -38,206 +38,72 @@ public class Main implements Runnable{
         }
     }
     
+    /**
+     * cleaner way of sleeping threads
+     *
+     * @param timeMs: time wished to sleep
+     */
+    private static void sleep(int timeMs) {
+        try {
+            Thread.sleep(timeMs);
+        } catch (Exception ignored) {
+        }
+        
+    }
+
     @Override
     public void run() {
-
-//        //US localization
-//       Localization.fallingEdge();
-//       try {
-//           Thread.sleep(100);
-//       } catch (InterruptedException e) {
-//           // TODO Auto-generated catch block
-//           e.printStackTrace();
-//       }
-//       SensorsPoller.resetGyro(0);
-//       try {
-//           Thread.sleep(100);
-//       } catch (InterruptedException e) {
-//           // TODO Auto-generated catch block
-//           e.printStackTrace();
-//       }
-//       Localization.travelUntilLineHit(45);
-
-       // Rotates to point, moves there, light localizes
-//       if (greenTeam == 15) {
-//            Localization.centralizeAtPoint(TILE_SIZE * 8, TILE_SIZE * 1);
-//            odometer.setXYT(8 * TILE_SIZE, 1 * TILE_SIZE, 270);
-//        } else {
-//            Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 8);
-//            odometer.setXYT(1 * TILE_SIZE, 8 * TILE_SIZE, 90);
-//        }
-       //just for testing
-      odometer.setXYT(8 * TILE_SIZE, 1 * TILE_SIZE, 270);
-//      Navigation.travelTo(1*TILE_SIZE, 1*TILE_SIZE);
-       // Moves to entrance of tunnel
+    
+        //US localization
+        Localization.fallingEdge();
+        sleep(100);
+    
+        if (greenTeam == 15)
+            SensorsPoller.resetGyro(270);
+        else
+            SensorsPoller.resetGyro(90);
+    
+        sleep(50);
+    
+        Localization.travelUntilLineHit(45);
+    
+        // Rotates to point, moves there, light localizes
+        if (greenTeam == 15) {
+            Localization.centralizeAtPoint(TILE_SIZE * 8, TILE_SIZE * 1);
+            //  odometer.setTheta(270);
+        } else {
+            Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 8);
+            //   odometer.setTheta(90);
+        }
+    
+        sleep(50);
+        // Moves to entrance of tunnel
         TunnelNavigation.entranceOfTunnel();
         Sound.beepSequenceUp();
         // Goes through tunnel
         TunnelNavigation.goThroughTunnel();
-        
+
 //         If we want to shoot
         // TunnelNavigation.shootingPoint();
         
         // If we don't want to shoot
         if (greenTeam == 15) {
-            Localization.travelUntilLineHit(90);
+            Localization.travelUntilLineHit(45);
             Localization.centralizeAtPoint(tng.ur.x, tng.ur.y + 1);
             Navigation.travelTo(tng.ur.x - 0.5, tng.ur.y + 1);
-            Navigation.turnTo(180);
-
+            Navigation.turnTo(SensorsPoller.getCurrentAngle()+180);
         } else {
-            Localization.travelUntilLineHit(0);
+            Localization.travelUntilLineHit(45);
             Localization.centralizeAtPoint(tnr.ur.x + 1, tng.ur.y);
             Navigation.travelTo(tng.ur.x + 1, tng.ur.y - 0.5);
             Navigation.turnTo(270);
         }
-
-       TunnelNavigation.goThroughTunnel(); 
-
-//      odometer.setXYT(30.48, 30.48,0);
-//      Navigation.travelTo(1* Resources.TILE_SIZE, 13*Resources.TILE_SIZE);
-//      leftMotor.stop(true);
-//      rightMotor.stop();
-//      leftMotor.flt();
-//      rightMotor.flt();
-//      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
-//      System.out.println("Odometer= " + odometer.getXYT()[2]);
-//     System.out.println(Arrays.toString(odometer.getXYT())); 
-//      try {
-//    Thread.sleep(1000);
-//} catch (InterruptedException e) {
-//    // TODO Auto-generated catch block
-//    e.printStackTrace();
-//}
-//      Navigation.travelTo(1* Resources.TILE_SIZE, 7*Resources.TILE_SIZE);
-//      leftMotor.stop(true);
-//      rightMotor.stop();
-//      leftMotor.flt();
-//      rightMotor.flt();
-//      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
-//      System.out.println("Odometer= " + odometer.getXYT()[2]);
-//     System.out.println(Arrays.toString(odometer.getXYT())); 
-//      try {
-//    Thread.sleep(1000);
-//} catch (InterruptedException e) {
-//    // TODO Auto-generated catch block
-//    e.printStackTrace();
-//}
-//      Navigation.travelTo(1* Resources.TILE_SIZE, 10*Resources.TILE_SIZE);
-//      leftMotor.stop(true);
-//      rightMotor.stop();
-//      leftMotor.flt();
-//      rightMotor.flt();
-//      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
-//      System.out.println("Odometer= " + odometer.getXYT()[2]);
-//     System.out.println(Arrays.toString(odometer.getXYT())); 
-//      try {
-//    Thread.sleep(1000);
-//} catch (InterruptedException e) {
-//    // TODO Auto-generated catch block
-//    e.printStackTrace();
-//}
-//      Navigation.travelTo(1* Resources.TILE_SIZE, 13*Resources.TILE_SIZE);
-//      leftMotor.stop(true);
-//      rightMotor.stop();
-//      leftMotor.flt();
-//      rightMotor.flt();
-//      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
-//      System.out.println("Odometer= " + odometer.getXYT()[2]);
-//     System.out.println(Arrays.toString(odometer.getXYT())); 
-//      try {
-//    Thread.sleep(1000);
-//} catch (InterruptedException e) {
-//    // TODO Auto-generated catch block
-//    e.printStackTrace();
-//}
-//      Navigation.travelTo(1* Resources.TILE_SIZE, 14*Resources.TILE_SIZE);
-//      leftMotor.stop(true);
-//      rightMotor.stop();
-//      leftMotor.flt();
-//      rightMotor.flt();
-//      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
-//      System.out.println("Odometer= " + odometer.getXYT()[2]);
-//     System.out.println(Arrays.toString(odometer.getXYT())); 
-//      try {
-//    Thread.sleep(1000);
-//} catch (InterruptedException e) {
-//    // TODO Auto-generated catch block
-//    e.printStackTrace();
-//}
-//      System.out.println("Gyro Angle = " + SensorsPoller.getCurrentAngle());
-//      System.out.println("Odometer= " + odometer.getXYT()[2]);
-//     System.out.println(Arrays.toString(odometer.getXYT())); 
-        //      Localization.fallingEdge();
-        /***
-         * TURN TO
-         */
-//      for(int i=1; i<10000000;i++) {
-//        Navigation.turnTo(90*i);
-//      }
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        Localization.travelUntilLineHit(45);
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        Localization.centralizeAtPoint(1 * Resources.TILE_SIZE,1 * Resources.TILE_SIZE);
-//      try {
-//      Thread.sleep(500);
-//      } catch (InterruptedException e) {
-//          // TODO Auto-generated catch block
-//          e.printStackTrace();
-//      }
-//        odometer.setXYT(1 * Resources.TILE_SIZE, 1 * Resources.TILE_SIZE, 0);
-//
-////
-//        TunnelNavigation.entranceOfTunnel();
-////////        Sound.beep();
-////        Navigation.turnTo(0);   //by this time robot is at appropriate distance to tunnel ready to localize again.
-//
-////        Localization.travelUntilLineHit(45);
-//        Localization.centralizeAtPoint(7*Resources.TILE_SIZE, 3*Resources.TILE_SIZE); //this should be changed to coordinates before the tunnel
-////        try {
-////        Thread.sleep(500);
-////        } catch (InterruptedException e) {
-////            // TODO Auto-generated catch block
-////            e.printStackTrace();
-////        }
-////        
-////        Navigation.turnTo(-35); //it seemed to under turn after localization so this fixes it.
-//        odometer.setTheta(0);   //should be facing zero by this point.
-////     
-        //     TunnelNavigation.goThroughTunnel();
-//      Localization.centralizeAtPoint(3*Resources.TILE_SIZE, (4+1)*Resources.TILE_SIZE); //it has exited the tunnel and is at the nearest safe zone
-//      
-//        
-
-//        Sound.beep();
-//        odometer.setXYT(4*Resources.TILE_SIZE, 2*Resources.TILE_SIZE, 0);
-//        
-//        TunnelNavigation.goThroughTunnel();
-//        TunnelNavigation.shootingPoint();
-//        TunnelNavigation.firePingPongBall();
-//        Navigation.travelTo(3 * TILE_SIZE, 3 * TILE_SIZE); // this should be the lower left of the tunnel (-1,-1)
-//        Localization.centralizeAtPoint(3 * TILE_SIZE, 3 * TILE_SIZE);
-
-//        TunnelNavigation.entranceOfTunnel(5,3,true);
-//        //maybe localize before?
-//        TunnelNavigation.insideTunnel(true);
-//        TunnelNavigation.shootingPoint(15,9);
-//        TunnelNavigation.firePingPongBall();
-//        TunnelNavigation.exitOfTunnel(5,5);
-//        //maybe localize before?
-//        TunnelNavigation.insideTunnel(false);
-//        //once u got our of the tunnel, u can now go back to starting point
-//        Navigation.travelTo(0, 0);
+    
+        //going back home
+        TunnelNavigation.goThroughTunnel();
+        TunnelNavigation.entranceOfTunnel();
+        sleep(100);
+        Navigation.travelTo(0, 0);
         
     }
 }
