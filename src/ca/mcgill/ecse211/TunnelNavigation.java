@@ -71,7 +71,7 @@ public class TunnelNavigation {
         double[] distTheta = new double[2];
         
         
-        while (true) {
+        while (true) { //we MUST make sure our head is in the tunnel before getting here.
             leftMotor.rotate(Navigation.convertDistance(0.25 * Resources.TILE_SIZE), true); //always drive forward half a tile
             rightMotor.rotate(Navigation.convertDistance(0.25 * Resources.TILE_SIZE), false);
             
@@ -83,36 +83,40 @@ public class TunnelNavigation {
             distTheta[0] = SensorsPoller.getCurrentDistance();
             System.out.println("right:" + distTheta[0]);
             
-            ultraSonicMotor.rotate(-120); // distance taken at the left
-            
+            ultraSonicMotor.rotate(-120); // distance taken at the left         
             
             distTheta[1] = SensorsPoller.getCurrentDistance();
             System.out.println("left:" + distTheta[1]);          
            
-//            if(distTheta[0] > 99 && distTheta[1] < 50) {    //this corrects when we begin 
-//              leftMotor.stop(true);
-//              rightMotor.rotate(Navigation.convertAngle(15), true);
-//            }
-            if(distTheta[0] > 99 || distTheta[1] > 99) { //base case
+            if(distTheta[0] > 99 && distTheta[1] > 99) { //base case
+              leftMotor.rotate(Navigation.convertDistance(0.7 * Resources.TILE_SIZE), true); //accounts for light sensor reading exit line
+              rightMotor.rotate(Navigation.convertDistance(0.7 * Resources.TILE_SIZE), false);
               break;
             }
             
             else if ((distTheta[0] > distTheta[1]) || ((distTheta[1] < 33) && (distTheta[0] < 33))) { //close to left wall
                 
-                leftMotor.rotate(Navigation.convertAngle(15), true); // check this value
-                rightMotor.rotate(-Navigation.convertAngle(15), false);
+                leftMotor.rotate(Navigation.convertAngle(10), true); // check this value
+                rightMotor.rotate(-Navigation.convertAngle(10), false);
                 
                 
             } else if ((distTheta[0] < distTheta[1]) || ((distTheta[0] < 33) && (distTheta[1] > 32))) {//close to right wall
-                leftMotor.rotate(-Navigation.convertAngle(15), false); // check this value
-                rightMotor.rotate(Navigation.convertAngle(15), true);
+                leftMotor.rotate(-Navigation.convertAngle(10), false); // check this value
+                rightMotor.rotate(Navigation.convertAngle(10), true);
                 
             } else {
-                continue; // can be refactored but basically go forward. Speed can be reset here as well.
-                
+                continue; // can be refactored but basically go forward. Speed can be reset here as well.               
             }
             
         }
+        
+        while(!SensorsPoller.getIsLineHit()) {
+          leftMotor.forward();
+          rightMotor.forward();
+        }
+        
+        leftMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), true);
+        rightMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), false);
         
     }
     
