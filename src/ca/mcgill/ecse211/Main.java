@@ -41,39 +41,41 @@ public class Main implements Runnable{
     @Override
     public void run() {
 
-        //US localization
-       Localization.fallingEdge();
-       try {
-           Thread.sleep(100);
-       } catch (InterruptedException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
-       }
-       SensorsPoller.resetGyro(0);
-       try {
-           Thread.sleep(100);
-       } catch (InterruptedException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
-       }
+//        //US localization
+//       Localization.fallingEdge();
+//       try {
+//           Thread.sleep(100);
+//       } catch (InterruptedException e) {
+//           // TODO Auto-generated catch block
+//           e.printStackTrace();
+//       }
+//       SensorsPoller.resetGyro(0);
+//       try {
+//           Thread.sleep(100);
+//       } catch (InterruptedException e) {
+//           // TODO Auto-generated catch block
+//           e.printStackTrace();
+//       }
+//       Localization.travelUntilLineHit(45);
+
        // Rotates to point, moves there, light localizes
-       if (greenTeam == 15) {
-            Localization.travelUntilLineHit(315);
-            Localization.centralizeAtPoint(TILE_SIZE * 7, TILE_SIZE * 1);
-            odometer.setXYT(7 * TILE_SIZE, 1 * TILE_SIZE, 270);
-        } else {
-            Localization.travelUntilLineHit(135);
-            Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 7);
-            odometer.setXYT(1 * TILE_SIZE, 7 * TILE_SIZE, 90);
-        }
-       
+//       if (greenTeam == 15) {
+//            Localization.centralizeAtPoint(TILE_SIZE * 8, TILE_SIZE * 1);
+//            odometer.setXYT(8 * TILE_SIZE, 1 * TILE_SIZE, 270);
+//        } else {
+//            Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 8);
+//            odometer.setXYT(1 * TILE_SIZE, 8 * TILE_SIZE, 90);
+//        }
+       //just for testing
+      odometer.setXYT(8 * TILE_SIZE, 1 * TILE_SIZE, 270);
+//      Navigation.travelTo(1*TILE_SIZE, 1*TILE_SIZE);
        // Moves to entrance of tunnel
         TunnelNavigation.entranceOfTunnel();
-
+        Sound.beepSequenceUp();
         // Goes through tunnel
         TunnelNavigation.goThroughTunnel();
         
-        // If we want to shoot
+//         If we want to shoot
         // TunnelNavigation.shootingPoint();
         
         // If we don't want to shoot

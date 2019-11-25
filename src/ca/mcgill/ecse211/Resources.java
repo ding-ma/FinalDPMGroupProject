@@ -27,7 +27,7 @@ public class Resources {
      * The IP address of the server that transmits data to the robot. Set this to the default for the
      * beta demo and competition.
      */
-    public static final String SERVER_IP = "192.168.2.23";
+    public static final String SERVER_IP = "192.168.2.12";
     
     /**
      * Your team number.
@@ -37,12 +37,12 @@ public class Resources {
     /**
      * Enables printing of debug info from the WiFi class.
      */
-    public static final boolean ENABLE_DEBUG_WIFI_PRINT = false;
+    public static final boolean ENABLE_DEBUG_WIFI_PRINT = true;
     
     /**
      * Enable this to attempt to receive Wi-Fi parameters at the start of the program.
      */
-    public static final boolean RECEIVE_WIFI_PARAMS = false;
+    public static final boolean RECEIVE_WIFI_PARAMS = true;
     
     
     /**
@@ -53,7 +53,7 @@ public class Resources {
     /**
      * The robot width in centimeters.
      */
-    public static final double TRACK = 17.1; //16; // increased by .5 for lower voltage 15.1, on small test is 15.4
+    public static final double TRACK = 17.35; //16; // increased by .5 for lower voltage 15.1, on small test is 15.4
     
     /**
      * Lightsensor distance to the middle of track.
@@ -302,6 +302,7 @@ public class Resources {
              * an exception letting you know.
              */
             wifiParameters = conn.getData();
+            System.out.println(wifiParameters);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }

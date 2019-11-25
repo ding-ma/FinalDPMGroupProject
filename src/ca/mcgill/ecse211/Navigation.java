@@ -132,7 +132,7 @@ public class Navigation {
         turnTo(Math.toDegrees(currentTheta)); // Turn the robot towards the destination
         
         leftMotor.setSpeed(FORWARD_SPEED);
-        rightMotor.setSpeed(FORWARD_SPEED);
+        rightMotor.setSpeed(FORWARD_SPEED+5);
         
         double distToTravel = euclideanDistance(currentX, currentY, x, y);
         //    System.out.println(distToTravel);

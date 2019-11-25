@@ -19,27 +19,27 @@ public class TunnelNavigation {
         // ACTUAL FUNCTION, REST IS TESTING
         // Moves to centre of 1 block before entrance of tunnel and turns toward tunnel
         
-        // if (greenTeam == 15) {
-        // move horizontally first
-        // Navigation.travelTo((tng.ll.x + 1)*TILE_SIZE, currentY);
-        // Navigation.travelTo((tng.ll.x + 1)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
-        // Localization.centralizeAtPoint((tng.ll.x + 1)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
-        // Navigation.travelTo((tng.ll.x + 0.5)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
-        // Navigation.turnTo(0);
-        // }
-        // else {
-        // //move vertically first
-        // Navigation.travelTo(currentX, (tnr.ll.y + 1)*TILE_SIZE)
-        // Navigation.travelTo((tnr.ll.x-1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE); //
-        // Localization.centralizeAtPoint((tnr.ll.x - 1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE);
-        // Navigation.travelTo((tnr.ll.x - 1)*TILE_SIZE, (tnr.ll.y + 0.5)*TILE_SIZE);
-        // Navigation.turnTo(90);
-        // }
+         if (greenTeam == 15) {
+         //move horizontally first
+         //Navigation.travelTo((tng.ll.x + 1)*TILE_SIZE, currentY);
+         Navigation.travelTo((tng.ll.x + 1)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
+         Localization.centralizeAtPoint((tng.ll.x + 1)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
+//         Navigation.travelTo((tng.ll.x + 0.5)*TILE_SIZE, (tng.ll.y-1)*TILE_SIZE);
+         Navigation.turnTo(0);
+         }
+         else {
+         //move vertically first
+        //Navigation.travelTo(currentX, (tnr.ll.y + 1)*TILE_SIZE);
+         Navigation.travelTo((tnr.ll.x-1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE); 
+         Localization.centralizeAtPoint((tnr.ll.x - 1)*TILE_SIZE, (tnr.ll.y + 1)*TILE_SIZE);
+         Navigation.travelTo((tnr.ll.x - 1)*TILE_SIZE, (tnr.ll.y + 0.5)*TILE_SIZE);
+         Navigation.turnTo(90);
+         }
         
-        // Testing
-        Navigation.travelTo((6) * TILE_SIZE, (4) * TILE_SIZE); // should be dependent on the tile and tunnel location
-        Localization.travelUntilLineHit(45);// this depends on the team we are on. 45 for testing purposes.
-        Localization.centralizeAtPoint((6) * TILE_SIZE, (4) * TILE_SIZE);
+//        // Testing
+//        Navigation.travelTo((6) * TILE_SIZE, (4) * TILE_SIZE); // should be dependent on the tile and tunnel location
+//        Localization.travelUntilLineHit(45);// this depends on the team we are on. 45 for testing purposes.
+//        Localization.centralizeAtPoint((6) * TILE_SIZE, (4) * TILE_SIZE);
     }
     
     // todo, need to add doging algorithm
