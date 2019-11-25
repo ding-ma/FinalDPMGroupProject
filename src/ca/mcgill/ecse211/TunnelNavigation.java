@@ -72,7 +72,6 @@ public class TunnelNavigation {
         
         
         while (true) {
-}
             leftMotor.rotate(Navigation.convertDistance(0.25 * Resources.TILE_SIZE), true); //always drive forward half a tile
             rightMotor.rotate(Navigation.convertDistance(0.25 * Resources.TILE_SIZE), false);
             

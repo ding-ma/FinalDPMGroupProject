@@ -40,11 +40,7 @@ public class Main implements Runnable{
     
     @Override
     public void run() {
-      while(true) {
-        if(SensorsPoller.getIsLineHit()) {
-          Sound.beep();
-        }
-      }
+
         //US localization
        Localization.fallingEdge();
        try {
