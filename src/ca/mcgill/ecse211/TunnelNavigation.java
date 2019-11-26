@@ -213,8 +213,8 @@ public class TunnelNavigation {
    */
   public static void firePingPongBall() {
     // motor rotate so it touches the sensor
-    triggerMotor.rotate(50);
-    triggerMotor.rotate(-50);
+    triggerMotor.rotate(270);
+    triggerMotor.rotate(-270);
 
     // makes the robot move super slowly during launch, so we have a better chance of hitting the target
     leftMotor.setSpeed(50);

@@ -65,29 +65,29 @@ public class Main implements Runnable {
     double[] tunnelPoints = WifiParser.tunnelLocalizationPoints();
     System.out.println("Tunnel points are " + Arrays.toString(tunnelPoints));
 
-    Localization.fallingEdge(); // US localization
-    sleep(100);
-    SensorsPoller.resetGyro(startingPoint[2]); // reset gyro to localization point angle
-    System.out.println("angle is " + startingPoint[2]);
-    sleep(50);
-
-    Localization.travelUntilLineHit(45);
-
-    Localization.centralizeAtPoint(startingPoint[0] * TILE_SIZE, startingPoint[1] * TILE_SIZE);
-    
-    for (int i = 0; i < 3; i++) { // 3 sequence of beeps after localizing
-      Sound.beep();
-    }
-    sleep(100);
-
-
-    // Moves to entrance of tunnel
-    TunnelNavigation.entranceOfTunnel(tunnelPoints);
-
-    // Goes through tunnel and localizes at nearest point
-    TunnelNavigation.goThroughTunnel(tunnelPoints);
-
-    // If we want to shoot
+//    Localization.fallingEdge(); // US localization
+//    sleep(100);
+//    SensorsPoller.resetGyro(startingPoint[2]); // reset gyro to localization point angle
+//    System.out.println("angle is " + startingPoint[2]);
+//    sleep(50);
+//
+//    Localization.travelUntilLineHit(45);
+//
+//    Localization.centralizeAtPoint(startingPoint[0] * TILE_SIZE, startingPoint[1] * TILE_SIZE);
+//    
+//    for (int i = 0; i < 3; i++) { // 3 sequence of beeps after localizing
+//      Sound.beep();
+//    }
+//    sleep(100);
+//
+//
+//    // Moves to entrance of tunnel
+//    TunnelNavigation.entranceOfTunnel(tunnelPoints);
+//
+//    // Goes through tunnel and localizes at nearest point
+//    TunnelNavigation.goThroughTunnel(tunnelPoints);
+//
+//    // If we want to shoot
     TunnelNavigation.shootingPoint();
 
 
@@ -98,43 +98,43 @@ public class Main implements Runnable {
     //.............. going back home.........................//
 
     // swap entry and exit values and change approach angle value
-    switch ((int) tunnelPoints[4]) {
-
-      case 0:
-        swapEntryExit(tunnelPoints);
-        tunnelPoints[4] = 180;
-        break;
-      case 90:
-        swapEntryExit(tunnelPoints);
-        tunnelPoints[4] = 270;
-        break;
-      case 180:
-        swapEntryExit(tunnelPoints);
-        tunnelPoints[4] = 0;
-        break;
-      case 270:
-        swapEntryExit(tunnelPoints);
-        tunnelPoints[4] = 90;
-        break;
-
-      default:
-        tunnelPoints[4] = 0;
-
-    }
-
-    // Moves to entrance of tunnel
-    TunnelNavigation.entranceOfTunnel(tunnelPoints);
-
-    Localization.centralizeAtPoint(tunnelPoints[0] * TILE_SIZE, tunnelPoints[1] * TILE_SIZE);
-
-    TunnelNavigation.goThroughTunnel(tunnelPoints); // Goes through tunnel and localizes at nearest point
-
-    sleep(100);
-    Navigation.travelTo(0, 0);
-    
-    for (int i = 0; i < 5; i++) { // 5 sequence of beeps to indicate return to starting area
-      Sound.beep();
-    }
+//    switch ((int) tunnelPoints[4]) {
+//
+//      case 0:
+//        swapEntryExit(tunnelPoints);
+//        tunnelPoints[4] = 180;
+//        break;
+//      case 90:
+//        swapEntryExit(tunnelPoints);
+//        tunnelPoints[4] = 270;
+//        break;
+//      case 180:
+//        swapEntryExit(tunnelPoints);
+//        tunnelPoints[4] = 0;
+//        break;
+//      case 270:
+//        swapEntryExit(tunnelPoints);
+//        tunnelPoints[4] = 90;
+//        break;
+//
+//      default:
+//        tunnelPoints[4] = 0;
+//
+//    }
+//
+//    // Moves to entrance of tunnel
+//    TunnelNavigation.entranceOfTunnel(tunnelPoints);
+//
+//    Localization.centralizeAtPoint(tunnelPoints[0] * TILE_SIZE, tunnelPoints[1] * TILE_SIZE);
+//
+//    TunnelNavigation.goThroughTunnel(tunnelPoints); // Goes through tunnel and localizes at nearest point
+//
+//    sleep(100);
+//    Navigation.travelTo(0, 0);
+//    
+//    for (int i = 0; i < 5; i++) { // 5 sequence of beeps to indicate return to starting area
+//      Sound.beep();
+//    }
     
 
   }
