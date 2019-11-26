@@ -151,7 +151,6 @@ public class Localization {
                 angleAtLines[currLineDetected] = odometer.getXYT()[2];
                 currLineDetected++;
                 onlyHitOnce = true;
-//                Sound.beep();
             }
             if(SensorsPoller.getIsLineHit()== false){
                 onlyHitOnce = false;
@@ -183,6 +182,8 @@ public class Localization {
 //        }
         
         Navigation.turnTo(0);
+       
+        System.out.println("current angle is " + SensorsPoller.getCurrentAngle());
         odometer.setXYT(xCoord, yCoord, SensorsPoller.getCurrentAngle());
 
     

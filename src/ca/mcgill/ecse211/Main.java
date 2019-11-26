@@ -58,21 +58,21 @@ public class Main implements Runnable {
      * parse wifi stuff here
      * 
      */
-
+    
     int[] startingPoint = WifiParser.getLocalizeStartingPoint();
+    System.out.println("STARTING POINT IS " + startingPoint[0] + " " + startingPoint[1] + " " + startingPoint[2] );
     double[] tunnelPoints = WifiParser.tunnelLocalizationPoints();
 
     Localization.fallingEdge(); // US localization
     sleep(100);
-
     SensorsPoller.resetGyro(startingPoint[2]); // reset gyro to localization point angle
-
+    System.out.println("angle is " + startingPoint[2]);
     sleep(50);
 
     Localization.travelUntilLineHit(45);
 
     Localization.centralizeAtPoint(startingPoint[0] * TILE_SIZE, startingPoint[1] * TILE_SIZE);
-
+    
     for (int i = 0; i < 3; i++) { // 3 sequence of beeps after localizing
       Sound.beep();
     }

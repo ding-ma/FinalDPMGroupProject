@@ -24,6 +24,7 @@ public class WifiParser {
     }
     
     public static int getOurCorner() {
+        setOurCorner();
         return ourCorner;
     }
     
@@ -35,7 +36,10 @@ public class WifiParser {
      */
     public static int[] getLocalizeStartingPoint() {
         int[] location = new int[3];
+        
         int corner = getOurCorner();
+        //TESTING 
+        System.out.println("our corner is " + corner);
         if (corner == 0) {
             location[0] = 1;
             location[1] = 1;
