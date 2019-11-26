@@ -126,7 +126,7 @@ public class Localization {
                 leftMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), true);
                 rightMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), false);
                 
-                Sound.beep();
+//                Sound.beep();
                 break;
             }
         }
@@ -151,7 +151,7 @@ public class Localization {
                 angleAtLines[currLineDetected] = odometer.getXYT()[2];
                 currLineDetected++;
                 onlyHitOnce = true;
-                Sound.beep();
+//                Sound.beep();
             }
             if(SensorsPoller.getIsLineHit()== false){
                 onlyHitOnce = false;

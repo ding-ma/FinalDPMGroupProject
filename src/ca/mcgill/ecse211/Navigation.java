@@ -138,7 +138,7 @@ public class Navigation {
         //    System.out.println(distToTravel);
         rightMotor.rotate(convertDistance(distToTravel), true);
         leftMotor.rotate(convertDistance(distToTravel), false);
-        Sound.beep();
+//        Sound.beep();
 
 }
 

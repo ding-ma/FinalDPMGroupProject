@@ -7,6 +7,7 @@ import static ca.mcgill.ecse211.Resources.*;
  */
 public class WifiParser {
     public static int ourCorner;
+    public static Region ourTunnel = null; // this shouldnt matter just so compiler doesnt scream at me
     
     //todo, idk where we should call this, it HAS to be after we received wifi params
     
@@ -87,9 +88,10 @@ public class WifiParser {
      * Localization point before entering the tunnel
      * [0,1] are x,y for entry of tunnel
      * [2,3] are x,y for exit of tunnel
+     * [4] is the turn angle to face tunnel after localizing at entrance
      */
     public static double[] tunnelLocalizationPoints() {
-        Region ourTunnel = null; // this shouldnt matter just so compiler doesnt scream at me
+     
         if (greenTeam == 15) {
             ourTunnel = green;
         }
@@ -100,19 +102,21 @@ public class WifiParser {
         int corner = getOurCorner();
         
         //todo, check if the point return is IN THE WATER, if it is, return the another point
-        double[] localizationPoint = new double[4];
+        double[] localizationPoint = new double[5];
         if (corner == 0) {
             if (isTunnelVertical) {
                 localizationPoint[0] = ourTunnel.ll.x;
                 localizationPoint[1] = ourTunnel.ll.y - 1;
                 localizationPoint[2] = ourTunnel.ur.x;
                 localizationPoint[3] = ourTunnel.ur.y + 1;
+                localizationPoint[4] = 0.0; //represents angle to face tunnel
             }
             if (!isTunnelVertical) {
                 localizationPoint[0] = ourTunnel.ll.x - 1;
                 localizationPoint[1] = ourTunnel.ll.y;
                 localizationPoint[2] = ourTunnel.ur.x + 1;
                 localizationPoint[3] = ourTunnel.ur.y;
+                localizationPoint[4] = 90.0;
             }
         }
         
@@ -122,12 +126,14 @@ public class WifiParser {
                 localizationPoint[1] = ourTunnel.ll.y - 1;
                 localizationPoint[2] = ourTunnel.ur.x;
                 localizationPoint[3] = ourTunnel.ur.y + 1;
+                localizationPoint[4] = 0.0;
             }
             if (!isTunnelVertical) {
                 localizationPoint[0] = ourTunnel.ur.x + 1;
                 localizationPoint[1] = ourTunnel.ur.y;
                 localizationPoint[2] = ourTunnel.ll.x - 1;
                 localizationPoint[3] = ourTunnel.ll.y;
+                localizationPoint[4] = 270.0;
             }
         }
         
@@ -137,12 +143,14 @@ public class WifiParser {
                 localizationPoint[1] = ourTunnel.ur.y + 1;
                 localizationPoint[2] = ourTunnel.ll.x;
                 localizationPoint[3] = ourTunnel.ll.y - 1;
+                localizationPoint[4] = 180.0;
             }
             if (!isTunnelVertical) {
                 localizationPoint[0] = ourTunnel.ur.x + 1;
                 localizationPoint[1] = ourTunnel.ur.y;
                 localizationPoint[2] = ourTunnel.ll.x - 1;
                 localizationPoint[3] = ourTunnel.ll.y;
+                localizationPoint[4] = 270.0;
             }
         }
         
@@ -152,12 +160,14 @@ public class WifiParser {
                 localizationPoint[1] = ourTunnel.ur.y + 1;
                 localizationPoint[2] = ourTunnel.ll.x;
                 localizationPoint[3] = ourTunnel.ll.y - 1;
+                localizationPoint[4] = 180.0;
             }
             if (!isTunnelVertical) {
                 localizationPoint[0] = ourTunnel.ll.x - 1;
                 localizationPoint[1] = ourTunnel.ll.y;
                 localizationPoint[2] = ourTunnel.ur.x + 1;
                 localizationPoint[3] = ourTunnel.ur.y;
+                localizationPoint[4] = 90.0;
             }
         }
         // check if the point is in the water
