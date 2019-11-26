@@ -3,6 +3,7 @@ package ca.mcgill.ecse211;
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
 import static ca.mcgill.ecse211.Resources.*;
+import java.util.Arrays;
 
 /**
  * Main class that drives all the code. Spawns the threads and the sequence of executions
@@ -60,8 +61,9 @@ public class Main implements Runnable {
      */
     
     int[] startingPoint = WifiParser.getLocalizeStartingPoint();
-    System.out.println("STARTING POINT IS " + startingPoint[0] + " " + startingPoint[1] + " " + startingPoint[2] );
+    System.out.println("Starting Point is " + startingPoint[0] + " " + startingPoint[1] + " " + startingPoint[2] );
     double[] tunnelPoints = WifiParser.tunnelLocalizationPoints();
+    System.out.println("Tunnel points are " + Arrays.toString(tunnelPoints));
 
     Localization.fallingEdge(); // US localization
     sleep(100);

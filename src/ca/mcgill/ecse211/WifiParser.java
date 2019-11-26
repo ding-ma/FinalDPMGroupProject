@@ -97,14 +97,14 @@ public class WifiParser {
     public static double[] tunnelLocalizationPoints() {
      
         if (greenTeam == 15) {
-            ourTunnel = green;
+            ourTunnel = tng;
         }
         if (redTeam == 15) {
-            ourTunnel = red;
+            ourTunnel = tnr;
         }
         boolean isTunnelVertical = isTunnelVertical();
         int corner = getOurCorner();
-        
+        System.out.println("our tunnel " + ourTunnel.ll.x + " " + ourTunnel.ll.y);
         //todo, check if the point return is IN THE WATER, if it is, return the another point
         double[] localizationPoint = new double[5];
         if (corner == 0) {
