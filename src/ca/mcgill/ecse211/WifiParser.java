@@ -109,68 +109,167 @@ public class WifiParser {
         double[] localizationPoint = new double[5];
         if (corner == 0) {
             if (isTunnelVertical) {
-                localizationPoint[0] = ourTunnel.ll.x;
-                localizationPoint[1] = ourTunnel.ll.y - 1;
-                localizationPoint[2] = ourTunnel.ur.x;
-                localizationPoint[3] = ourTunnel.ur.y + 1;
-                localizationPoint[4] = 0.0; //represents angle to face tunnel
+                if (!checkIfPointIsInWater(ourTunnel.ll.x, ourTunnel.ll.y - 1)) {
+                    localizationPoint[0] = ourTunnel.ll.x;
+                    localizationPoint[1] = ourTunnel.ll.y - 1;
+                } else {
+                    localizationPoint[0] = ourTunnel.ll.x + 1;
+                    localizationPoint[1] = ourTunnel.ll.y - 1;
+                }
+    
+                if (!checkIfPointIsInWater(ourTunnel.ur.x - 1, ourTunnel.ur.y + 1)) {
+                    localizationPoint[2] = ourTunnel.ur.x - 1;
+                    localizationPoint[3] = ourTunnel.ur.y + 1;
+                } else {
+                    localizationPoint[2] = ourTunnel.ur.x;
+                    localizationPoint[3] = ourTunnel.ur.y + 1;
+                }
+    
+                localizationPoint[4] = 0.0;
             }
+    
             if (!isTunnelVertical) {
-                localizationPoint[0] = ourTunnel.ll.x - 1;
-                localizationPoint[1] = ourTunnel.ll.y;
-                localizationPoint[2] = ourTunnel.ur.x + 1;
-                localizationPoint[3] = ourTunnel.ur.y;
+                if (!checkIfPointIsInWater(ourTunnel.ll.x - 1, ourTunnel.ll.y)) {
+                    localizationPoint[0] = ourTunnel.ll.x - 1;
+                    localizationPoint[1] = ourTunnel.ll.y;
+                } else {
+                    localizationPoint[0] = ourTunnel.ll.x - 1;
+                    localizationPoint[1] = ourTunnel.ll.y + 1;
+                }
+        
+                if (!checkIfPointIsInWater(ourTunnel.ur.x + 1, ourTunnel.ur.y)) {
+                    localizationPoint[2] = ourTunnel.ur.x + 1;
+                    localizationPoint[3] = ourTunnel.ur.y;
+                } else {
+                    localizationPoint[2] = ourTunnel.ur.x + 1;
+                    localizationPoint[3] = ourTunnel.ur.y - 1;
+                }
+                
                 localizationPoint[4] = 90.0;
             }
         }
         
         if (corner == 1) {
             if (isTunnelVertical) {
-                localizationPoint[0] = ourTunnel.ll.x;
-                localizationPoint[1] = ourTunnel.ll.y - 1;
-                localizationPoint[2] = ourTunnel.ur.x;
-                localizationPoint[3] = ourTunnel.ur.y + 1;
+                if (!checkIfPointIsInWater(ourTunnel.ll.x, ourTunnel.ll.y - 1)) {
+                    localizationPoint[0] = ourTunnel.ll.x;
+                    localizationPoint[1] = ourTunnel.ll.y - 1;
+                } else {
+                    localizationPoint[0] = ourTunnel.ll.x + 1;
+                    localizationPoint[1] = ourTunnel.ll.y - 1;
+                }
+    
+                if (!checkIfPointIsInWater(ourTunnel.ur.x - 1, ourTunnel.ur.y + 1)) {
+                    localizationPoint[2] = ourTunnel.ur.x - 1;
+                    localizationPoint[3] = ourTunnel.ur.y + 1;
+                } else {
+                    localizationPoint[2] = ourTunnel.ur.x;
+                    localizationPoint[3] = ourTunnel.ur.y + 1;
+                }
+        
                 localizationPoint[4] = 0.0;
             }
+    
             if (!isTunnelVertical) {
-                localizationPoint[0] = ourTunnel.ur.x + 1;
-                localizationPoint[1] = ourTunnel.ur.y;
-                localizationPoint[2] = ourTunnel.ll.x - 1;
-                localizationPoint[3] = ourTunnel.ll.y;
+                if (!checkIfPointIsInWater(ourTunnel.ur.x + 1, ourTunnel.ur.y)) {
+                    localizationPoint[0] = ourTunnel.ur.x + 1;
+                    localizationPoint[1] = ourTunnel.ur.y;
+                } else {
+                    localizationPoint[0] = ourTunnel.ur.x + 1;
+                    localizationPoint[1] = ourTunnel.ur.y - 1;
+                }
+        
+                if (!checkIfPointIsInWater(ourTunnel.ll.x - 1, ourTunnel.ll.y)) {
+                    localizationPoint[2] = ourTunnel.ll.x - 1;
+                    localizationPoint[3] = ourTunnel.ll.y;
+                } else {
+                    localizationPoint[2] = ourTunnel.ll.x - 1;
+                    localizationPoint[3] = ourTunnel.ll.y + 1;
+                }
+        
                 localizationPoint[4] = 270.0;
             }
         }
         
         if (corner == 2) {
             if (isTunnelVertical) {
-                localizationPoint[0] = ourTunnel.ur.x;
-                localizationPoint[1] = ourTunnel.ur.y + 1;
-                localizationPoint[2] = ourTunnel.ll.x;
-                localizationPoint[3] = ourTunnel.ll.y - 1;
+                if (!checkIfPointIsInWater(ourTunnel.ur.x - 1, ourTunnel.ur.y + 1)) {
+                    localizationPoint[0] = ourTunnel.ur.x - 1;
+                    localizationPoint[1] = ourTunnel.ur.y + 1;
+                } else {
+                    localizationPoint[0] = ourTunnel.ur.x;
+                    localizationPoint[1] = ourTunnel.ur.y + 1;
+                }
+    
+                if (!checkIfPointIsInWater(ourTunnel.ll.x, ourTunnel.ll.y - 1)) {
+                    localizationPoint[2] = ourTunnel.ll.x;
+                    localizationPoint[3] = ourTunnel.ll.y - 1;
+                } else {
+                    localizationPoint[2] = ourTunnel.ll.x + 1;
+                    localizationPoint[3] = ourTunnel.ll.y - 1;
+                }
+                
                 localizationPoint[4] = 180.0;
             }
             if (!isTunnelVertical) {
-                localizationPoint[0] = ourTunnel.ur.x + 1;
-                localizationPoint[1] = ourTunnel.ur.y;
-                localizationPoint[2] = ourTunnel.ll.x - 1;
-                localizationPoint[3] = ourTunnel.ll.y;
+                if (!checkIfPointIsInWater(ourTunnel.ur.x + 1, ourTunnel.ur.y)) {
+                    localizationPoint[0] = ourTunnel.ur.x + 1;
+                    localizationPoint[1] = ourTunnel.ur.y;
+                } else {
+                    localizationPoint[0] = ourTunnel.ur.x + 1;
+                    localizationPoint[1] = ourTunnel.ur.y - 1;
+                }
+    
+                if (!checkIfPointIsInWater(ourTunnel.ll.x - 1, ourTunnel.ll.y)) {
+                    localizationPoint[2] = ourTunnel.ll.x - 1;
+                    localizationPoint[3] = ourTunnel.ll.y;
+                } else {
+                    localizationPoint[2] = ourTunnel.ll.x - 1;
+                    localizationPoint[3] = ourTunnel.ll.y + 1;
+                }
+        
                 localizationPoint[4] = 270.0;
             }
+    
         }
         
         if (corner == 3) {
             if (isTunnelVertical) {
-                localizationPoint[0] = ourTunnel.ur.x;
-                localizationPoint[1] = ourTunnel.ur.y + 1;
-                localizationPoint[2] = ourTunnel.ll.x;
-                localizationPoint[3] = ourTunnel.ll.y - 1;
+                if (!checkIfPointIsInWater(ourTunnel.ur.x - 1, ourTunnel.ur.y + 1)) {
+                    localizationPoint[0] = ourTunnel.ur.x - 1;
+                    localizationPoint[1] = ourTunnel.ur.y + 1;
+                } else {
+                    localizationPoint[0] = ourTunnel.ur.x;
+                    localizationPoint[1] = ourTunnel.ur.y + 1;
+                }
+    
+                if (!checkIfPointIsInWater(ourTunnel.ll.x, ourTunnel.ll.y - 1)) {
+                    localizationPoint[2] = ourTunnel.ll.x;
+                    localizationPoint[3] = ourTunnel.ll.y - 1;
+                } else {
+                    localizationPoint[2] = ourTunnel.ll.x + 1;
+                    localizationPoint[3] = ourTunnel.ll.y - 1;
+                }
+                
                 localizationPoint[4] = 180.0;
             }
             if (!isTunnelVertical) {
-                localizationPoint[0] = ourTunnel.ll.x - 1;
-                localizationPoint[1] = ourTunnel.ll.y;
-                localizationPoint[2] = ourTunnel.ur.x + 1;
-                localizationPoint[3] = ourTunnel.ur.y;
+                if (!checkIfPointIsInWater(ourTunnel.ll.x - 1, ourTunnel.ll.y)) {
+                    localizationPoint[0] = ourTunnel.ll.x - 1;
+                    localizationPoint[1] = ourTunnel.ll.y;
+                } else {
+                    localizationPoint[0] = ourTunnel.ll.x - 1;
+                    localizationPoint[1] = ourTunnel.ll.y + 1;
+                }
+    
+                if (!checkIfPointIsInWater(ourTunnel.ur.x + 1, ourTunnel.ur.y)) {
+                    localizationPoint[2] = ourTunnel.ur.x + 1;
+                    localizationPoint[3] = ourTunnel.ur.y;
+                } else {
+                    localizationPoint[2] = ourTunnel.ur.x + 1;
+                    localizationPoint[3] = ourTunnel.ur.y - 1;
+                }
+        
                 localizationPoint[4] = 90.0;
             }
         }
@@ -183,8 +282,23 @@ public class WifiParser {
     if it is, generate the opposite one
     if not, return the same point
      */
-    public boolean checkIfPointIsInWater() {
-        return false;
+    public static boolean checkIfPointIsInWater(double x, double y) {
+        // Checks if in red zone
+        if (x > red.ll.x + 1 && x < red.ur.x - 1 && y > red.ll.y + 1 && y < red.ur.y - 1) {
+            return false;
+        }
+    
+        // Checks if in green zone
+        if (x > green.ll.x + 1 && x < green.ur.x - 1 && y > green.ll.y + 1 && y < green.ur.y - 1) {
+            return false;
+        }
+    
+        // Checks if on Island
+        if (x > island.ll.x + 1 && x < island.ur.x - 1 && y > island.ll.y + 1 && y < island.ur.y - 1) {
+            return false;
+        }
+    
+        return true;
     }
 }
 
