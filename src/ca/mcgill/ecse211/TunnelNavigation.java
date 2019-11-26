@@ -18,7 +18,20 @@ public class TunnelNavigation {
         
         // ACTUAL FUNCTION, REST IS TESTING
         // Moves to centre of 1 block before entrance of tunnel and turns toward tunnel
+    
+        //todo, example
+        double[] locations = WifiParser.tunnelLocalizationPoints();
         
+        
+        /*
+        
+        
+        
+        all the team stuff can be removed because locations is taking that into account
+        
+        
+        
+         */
          if (greenTeam == 15) {
          //move horizontally first
          //Navigation.travelTo((tng.ll.x + 1)*TILE_SIZE, currentY);

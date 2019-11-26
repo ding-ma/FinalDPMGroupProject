@@ -13,6 +13,9 @@ public class Main implements Runnable {
     public static void main(String[] args) {
         int buttonChoice;
         do {
+            /*
+            do the pre processing here
+             */
             //Clear the display
             LCD.clear();
             //Prompt the user for travel and shoot, and just shoot
@@ -53,7 +56,10 @@ public class Main implements Runnable {
 
     @Override
     public void run() {
-    
+        /*
+        parse wifi stuff here
+         */
+        
         //US localization
         Localization.fallingEdge();
         sleep(100);
@@ -69,7 +75,7 @@ public class Main implements Runnable {
     
         // Rotates to point, moves there, light localizes
         if (greenTeam == 15) {
-            Localization.centralizeAtPoint(TILE_SIZE * 8, TILE_SIZE * 1);
+            Localization.centralizeAtPoint(TILE_SIZE * 14, TILE_SIZE * 1);
             //  odometer.setTheta(270);
         } else {
             Localization.centralizeAtPoint(TILE_SIZE * 1, TILE_SIZE * 8);
@@ -88,10 +94,10 @@ public class Main implements Runnable {
         
         // If we don't want to shoot
         if (greenTeam == 15) {
-            Localization.travelUntilLineHit(45);
-            Localization.centralizeAtPoint(tng.ur.x, tng.ur.y + 1);
-            Navigation.travelTo(tng.ur.x - 0.5, tng.ur.y + 1);
-            Navigation.turnTo(SensorsPoller.getCurrentAngle()+180);
+//            Localization.travelUntilLineHit(45);
+//            Localization.centralizeAtPoint(tng.ur.x, tng.ur.y + 1);
+//            Navigation.travelTo(tng.ur.x - 0.5, tng.ur.y + 1);
+//            Navigation.turnTo(SensorsPoller.getCurrentAngle()+180);
         } else {
             Localization.travelUntilLineHit(45);
             Localization.centralizeAtPoint(tnr.ur.x + 1, tng.ur.y);
