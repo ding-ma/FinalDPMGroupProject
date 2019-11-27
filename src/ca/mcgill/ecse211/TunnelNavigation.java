@@ -39,8 +39,9 @@ public class TunnelNavigation {
 
     leftMotor.setSpeed(100); // move slowly to make the turns
     rightMotor.setSpeed(100);
-    int angleA, angleB;
-
+    int angleA = 0;
+    int angleB = 0;
+    
     if (tunnellocations[4] == 0 && tunnellocations[0] > WifiParser.ourTunnel.ll.x) { // applies for corner 0,1 vertical
                                                                                      // tunnel
       // turn 270, move half a tile, turn to 0 and move .75 a tile
@@ -48,31 +49,38 @@ public class TunnelNavigation {
       angleB = 0;
     } else {
       // turn 90, move half a tile, turn to 0, move .75 a tile
+    	if (tunnellocations[4] == 0) {
       angleA = 90;
       angleB = 0;
+    	}
     }
-
-    if (tunnellocations[4] == 90 && tunnellocations[1] > WifiParser.ourTunnel.ll.y) {// applies for corner 0,3
+    
+    if (tunnellocations[4] == 90 && tunnellocations[1] > WifiParser.ourTunnel.ll.y) { // applies for corner 0,3
                                                                                      // horizontal tunnel
       // turn to 180, move half a tile, turn to 90, move .75 a tile
       angleA = 180;
       angleB = 90;
 
     } else {
+    	if (tunnellocations[4] == 90) {
       // turn to 0, move half a tile, turn to 90, move .75 a tile
       angleA = 0;
       angleB = 90;
+    	}
     }
 
     if (tunnellocations[4] == 180 && tunnellocations[0] < WifiParser.ourTunnel.ur.x) { // applies for corner 2,3
                                                                                        // vertical tunnel
       // turn to 90, move half a tile, turn 180, move .75 a tile
-      angleA = 90;
+    	angleA = 90;
       angleB = 180;
+      
     } else {
+    	if (tunnellocations[4] == 180) {
+
       // turn to 270, move half a tile, turn 180, move .75 a tile
       angleA = 270;
-      angleB = 180;
+      angleB = 180;}
     }
 
     if (tunnellocations[4] == 270 && tunnellocations[1] < WifiParser.ourTunnel.ur.y) { // applies for corner 1,2
@@ -82,10 +90,15 @@ public class TunnelNavigation {
       angleB = 270;
     } else {
       // turn to 180, move half a tile, turn 270, move .75 a tile
-      angleA = 180;
-      angleB = 270;
-    }
+    	if (tunnellocations[4] == 270) {
 
+    	angleA = 180;
+      angleB = 270;
+    	}
+    }
+    
+    System.out.println("A"+angleA);
+    System.out.println("B"+angleB);
 
     Navigation.turnTo(angleA); // angle to turn based on your orientation
     leftMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), true);

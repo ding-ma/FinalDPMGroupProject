@@ -2,6 +2,8 @@ package ca.mcgill.ecse211;
 
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
+import lejos.hardware.Wifi;
+
 import static ca.mcgill.ecse211.Resources.*;
 import java.util.Arrays;
 
@@ -61,29 +63,33 @@ public class Main implements Runnable {
      */
     
     int[] startingPoint = WifiParser.getLocalizeStartingPoint();
-    System.out.println("Starting Point is " + startingPoint[0] + " " + startingPoint[1] + " " + startingPoint[2] );
+    System.out.println("Starting Point are "+Arrays.toString(startingPoint));
+    
     double[] tunnelPoints = WifiParser.tunnelLocalizationPoints();
-    System.out.println("Tunnel points are " + Arrays.toString(tunnelPoints));
+    System.out.println("Tunnels points are " + Arrays.toString(tunnelPoints));
 
     Localization.fallingEdge(); // US localization
     sleep(100);
     SensorsPoller.resetGyro(startingPoint[2]); // reset gyro to localization point angle
     System.out.println("angle is " + startingPoint[2]);
     sleep(50);
-
-    Localization.travelUntilLineHit(45);
+    
+    System.out.println(Arrays.toString(odometer.getXYT()));
+    Localization.travelUntilLineHit(startingPoint[2]+45);
 
     Localization.centralizeAtPoint(startingPoint[0] * TILE_SIZE, startingPoint[1] * TILE_SIZE);
+    System.out.println(Arrays.toString(odometer.getXYT()));
     
     for (int i = 0; i < 3; i++) { // 3 sequence of beeps after localizing
       Sound.beep();
     }
+    
     sleep(100);
 
 
     // Moves to entrance of tunnel
     TunnelNavigation.entranceOfTunnel(tunnelPoints);
-
+System.out.println(WifiParser.isTunnelVertical());
     // Goes through tunnel and localizes at nearest point
     TunnelNavigation.goThroughTunnel(tunnelPoints);
 
@@ -98,6 +104,9 @@ public class Main implements Runnable {
     //.............. going back home.........................//
 
     // swap entry and exit values and change approach angle value
+    
+    System.out.println("Before Swap"+Arrays.toString(tunnelPoints));
+    
     switch ((int) tunnelPoints[4]) {
 
       case 0:
@@ -121,16 +130,18 @@ public class Main implements Runnable {
         tunnelPoints[4] = 0;
 
     }
+    System.out.println("After Swap"+Arrays.toString(tunnelPoints));
 
     // Moves to entrance of tunnel
     TunnelNavigation.entranceOfTunnel(tunnelPoints);
 
-    Localization.centralizeAtPoint(tunnelPoints[0] * TILE_SIZE, tunnelPoints[1] * TILE_SIZE);
+    Localization.centralizeAtPoint(tunnelPoints[0] * TILE_SIZE, tunnelPoints[1] * TILE_SIZE); //these are swapped
 
     TunnelNavigation.goThroughTunnel(tunnelPoints); // Goes through tunnel and localizes at nearest point
 
     sleep(100);
-    Navigation.travelTo(0, 0);
+    
+    Navigation.travelTo(startingPoint[0], startingPoint[1]);
     
     for (int i = 0; i < 5; i++) { // 5 sequence of beeps to indicate return to starting area
       Sound.beep();

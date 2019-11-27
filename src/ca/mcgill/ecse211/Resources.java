@@ -21,13 +21,13 @@ public class Resources {
     /**
      * The default server IP used by the profs and TA's.
      */
-    public static final String DEFAULT_SERVER_IP = "192.168.2.3";
+    public static final String DEFAULT_SERVER_IP = "192.168.2.3"; //192.168.2.3
     
     /**
      * The IP address of the server that transmits data to the robot. Set this to the default for the
      * beta demo and competition.
      */
-    public static final String SERVER_IP = "192.168.2.21";
+    public static final String SERVER_IP = "192.168.2.43";
     
     /**
      * Your team number.
