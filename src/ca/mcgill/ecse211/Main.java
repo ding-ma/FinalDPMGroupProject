@@ -69,10 +69,8 @@ public class Main implements Runnable {
     System.out.println("Tunnels points are " + Arrays.toString(tunnelPoints));
 
     Localization.fallingEdge(); // US localization
-    sleep(100);
     SensorsPoller.resetGyro(startingPoint[2]); // reset gyro to localization point angle
     System.out.println("angle is " + startingPoint[2]);
-    sleep(50);
     
     System.out.println(Arrays.toString(odometer.getXYT()));
     Localization.travelUntilLineHit(startingPoint[2]+45);
@@ -84,7 +82,6 @@ public class Main implements Runnable {
       Sound.beep();
     }
     
-    sleep(100);
 
 
     // Moves to entrance of tunnel

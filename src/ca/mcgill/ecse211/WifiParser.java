@@ -53,6 +53,8 @@ public class WifiParser {
         if (corner == 2) {
             location[0] = 14;
             location[1] = 8;
+//          location[0] = 7;
+//          location[1] = 7;
             location[2] = 180;
         }
         if (corner == 3) {
@@ -71,17 +73,19 @@ public class WifiParser {
      */
     public static boolean isTunnelVertical() {
         if (greenTeam == 15) {
-            if (green.ur.x - 1 == green.ll.x)
+          System.out.println(tng.ur.x - tng.ll.x);
+            if (tng.ur.x - tng.ll.x == 1.0)
                 return true;
-            if (green.ur.y - 1 == green.ll.y) {
+            else if (tng.ur.y - tng.ll.y == 1.0) {
                 return false;
             }
         }
         
         if (redTeam == 15) {
-            if (red.ur.x - 1 == red.ll.x)
+          System.out.println(tnr.ur.x - tnr.ll.x);
+            if (tnr.ur.x - tnr.ll.x == 1.0)
                 return true;
-            if (red.ur.y - 1 == red.ll.y) {
+            else if (tnr.ur.y - tnr.ll.y == 1.0) {
                 return false;
             }
         }

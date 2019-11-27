@@ -104,9 +104,9 @@ public class TunnelNavigation {
     leftMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), true);
     rightMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), false);
     Navigation.turnTo(angleB);
-    leftMotor.rotate(Navigation.convertDistance(0.75 * Resources.TILE_SIZE), true); // this should get our head inside
+    leftMotor.rotate(Navigation.convertDistance(0.85 * Resources.TILE_SIZE), true); // this should get our head inside
                                                                                     // the tunnel
-    rightMotor.rotate(Navigation.convertDistance(0.75 * Resources.TILE_SIZE), false);
+    rightMotor.rotate(Navigation.convertDistance(0.85 * Resources.TILE_SIZE), false);
 
     leftMotor.stop(true);
     rightMotor.stop(false);
@@ -139,7 +139,7 @@ public class TunnelNavigation {
       distTheta[1] = SensorsPoller.getCurrentDistance();
       System.out.println("left:" + distTheta[1]);
 
-      if (distTheta[0] > 99 && distTheta[1] > 99) { // base case
+      if (distTheta[0] > 40 && distTheta[1] > 40) { // base case
         leftMotor.rotate(Navigation.convertDistance(0.7 * Resources.TILE_SIZE), true); // accounts for light sensor
                                                                                        // reading exit line
         rightMotor.rotate(Navigation.convertDistance(0.7 * Resources.TILE_SIZE), false);

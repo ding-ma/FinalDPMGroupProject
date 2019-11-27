@@ -72,7 +72,6 @@ public class Localization {
         
         leftMotor.stop(true);
         rightMotor.stop(false);
-        sleep(100);
         //Record second angle
         angle2 = odometer.getXYT()[2];
         
@@ -140,8 +139,8 @@ public class Localization {
         double currentY;
         double angleX;
         double angleY;
-        leftMotor.setSpeed(MOTOR_LOW);
-        rightMotor.setSpeed(MOTOR_LOW);
+        leftMotor.setSpeed(120);
+        rightMotor.setSpeed(120);
         boolean onlyHitOnce = false;
         while (currLineDetected < 4) {
             // Rotate in place to find the next line.
@@ -181,7 +180,7 @@ public class Localization {
 //            Navigation.turnTo(-20); // robot always under turns to right
 //        }
         
-        Navigation.turnTo(0);
+        Navigation.turnTo(WifiParser.getLocalizeStartingPoint()[2]);
        
         System.out.println("current angle is " + SensorsPoller.getCurrentAngle());
         odometer.setXYT(xCoord, yCoord, SensorsPoller.getCurrentAngle());
