@@ -3,16 +3,21 @@ package ca.mcgill.ecse211;
 import static ca.mcgill.ecse211.Resources.*;
 
 /**
- * Parses wifi parameter from the server in order to deal with edge cases
+ * Parses wifi parameter from the server in order to deal with edge cases. This class is made in order to make the rest simply.
  */
 public class WifiParser {
+    /**
+     * Our corner.
+     */
     public static int ourCorner;
-    public static Region ourTunnel = null; // this shouldnt matter just so compiler doesnt scream at me
-    
-    //todo, idk where we should call this, it HAS to be after we received wifi params
     
     /**
-     * corner number
+     * Our Tunnel
+     */
+    public static Region ourTunnel = null; // this shouldnt matter just so compiler doesnt scream at me
+    
+    /**
+     * Sets our corner number based on our team number from wifi parameter
      */
     public static void setOurCorner() {
         if (greenTeam == 15) {
@@ -23,23 +28,28 @@ public class WifiParser {
         }
     }
     
+    /**
+     * Returns our corner number
+     *
+     * @return: corner number
+     */
     public static int getOurCorner() {
         setOurCorner();
         return ourCorner;
     }
     
     /**
-     * Localization point
-     * [0] is x, [1] is y, [2] is angle
+     * Generates Localization points based on the corner. This is will be used to set the odometer after localization.
+     * [0] is X
+     * [1] is Y
+     * [2] is Theta
      *
-     * @return
+     * @return: Array of localization parameter
      */
     public static int[] getLocalizeStartingPoint() {
         int[] location = new int[3];
         
         int corner = getOurCorner();
-        //TESTING 
-        System.out.println("our corner is " + corner);
         if (corner == 0) {
             location[0] = 1;
             location[1] = 1;
@@ -53,8 +63,6 @@ public class WifiParser {
         if (corner == 2) {
             location[0] = 14;
             location[1] = 8;
-//          location[0] = 7;
-//          location[1] = 7;
             location[2] = 180;
         }
         if (corner == 3) {
@@ -66,9 +74,7 @@ public class WifiParser {
     }
     
     /**
-     * vertical is in y
-     * horizontal is in x
-     *
+     * Checks if the tunnel is vertical our horizontal based on its coordinates
      * @return: true if vertical, false horizontal
      */
     public static boolean isTunnelVertical() {
@@ -93,7 +99,7 @@ public class WifiParser {
     }
     
     /**
-     * Localization point before entering the tunnel
+     * Gives the localization points for the entry and the exit of the tunnel.
      * [0,1] are x,y for entry of tunnel
      * [2,3] are x,y for exit of tunnel
      * [4] is the turn angle to face tunnel after localizing at entrance
@@ -108,8 +114,7 @@ public class WifiParser {
         }
         boolean isTunnelVertical = isTunnelVertical();
         int corner = getOurCorner();
-        System.out.println("our tunnel " + ourTunnel.ll.x + " " + ourTunnel.ll.y);
-        //todo, check if the point return is IN THE WATER, if it is, return the another point
+    
         double[] localizationPoint = new double[5];
         if (corner == 0) {
             if (isTunnelVertical) {
@@ -273,7 +278,7 @@ public class WifiParser {
                     localizationPoint[2] = ourTunnel.ur.x + 1;
                     localizationPoint[3] = ourTunnel.ur.y - 1;
                 }
-        
+    
                 localizationPoint[4] = 90.0;
             }
         }
@@ -281,17 +286,19 @@ public class WifiParser {
         return localizationPoint;
     }
     
-    /*
-    after we generate the point, we have to check if it is in the water
-    if it is, generate the opposite one
-    if not, return the same point
+    /**
+     * Checks if the giving localization point is in the water.
+     *
+     * @param x: X-coordinate localization
+     * @param y: Y-coordinate localization
+     * @return: true if it is in water, false otherwise.
      */
     public static boolean checkIfPointIsInWater(double x, double y) {
         // Checks if in red zone
         if (x > red.ll.x + 1 && x < red.ur.x - 1 && y > red.ll.y + 1 && y < red.ur.y - 1) {
             return false;
         }
-    
+        
         // Checks if in green zone
         if (x > green.ll.x + 1 && x < green.ur.x - 1 && y > green.ll.y + 1 && y < green.ur.y - 1) {
             return false;
@@ -301,7 +308,7 @@ public class WifiParser {
         if (x > island.ll.x + 1 && x < island.ur.x - 1 && y > island.ll.y + 1 && y < island.ur.y - 1) {
             return false;
         }
-    
+        
         return true;
     }
 }

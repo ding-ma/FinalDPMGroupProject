@@ -1,16 +1,12 @@
 package ca.mcgill.ecse211;
 
-import lejos.hardware.Sound;
-
 import static ca.mcgill.ecse211.Resources.*;
 
 /**
  * Navigation is a helper class which allows does the calculations for our robot
  */
-// THIS IS A STATIC CLASS, DO NOT PUT INSTANCES
 
 public class Navigation {
-    
     
     private static double currentTheta; // the current angle
     
@@ -39,11 +35,8 @@ public class Navigation {
     /**
      * Check if the robot can avoid right or left depending on the current X,Y and Theta
      *
-     * @param curX: current X
-     * @param curY: current Y
-     * @return: dodge right or left
+     * @return: true if can avoid right, false otherwise
      */
-
     public static boolean canAvoidRight() {
         double[] currLocation = odometer.getXYT();
 

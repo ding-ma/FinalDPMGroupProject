@@ -1,5 +1,7 @@
 package ca.mcgill.ecse211;
 
+import static ca.mcgill.ecse211.Resources.*;
+
 /**
  * Poller class with getter and setters to fetch the entire robot sensor
  * Sensors that are fetched:
@@ -7,9 +9,7 @@ package ca.mcgill.ecse211;
  * -Ultrasonic Sensor
  * -Light Sensor
  */
-
-import static ca.mcgill.ecse211.Resources.*;
-public class SensorsPoller implements Runnable{
+public class SensorsPoller implements Runnable {
     
     private float[] gyroData = new float[GYRO_SENSOR.sampleSize()];
     private float[] usData = new float[US_SENSOR.sampleSize()];

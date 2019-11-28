@@ -1,8 +1,13 @@
 package ca.mcgill.ecse211;
 
 import java.text.DecimalFormat;
-import static ca.mcgill.ecse211.Resources.*;
 
+import static ca.mcgill.ecse211.Resources.LCD;
+import static ca.mcgill.ecse211.Resources.odometer;
+
+/**
+ * Display class in order to print onto the console of the EV3. This also allows us to see what is going on with the EV3 remote console.
+ */
 public class Display implements Runnable {
     
     private final long DISPLAY_PERIOD = 25;
@@ -20,6 +25,7 @@ public class Display implements Runnable {
             LCD.drawString(strings[i], 0, i);
         }
     }
+    
     @Override
     public void run() {
         

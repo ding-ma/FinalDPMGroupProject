@@ -27,7 +27,7 @@ public class Resources {
      * The IP address of the server that transmits data to the robot. Set this to the default for the
      * beta demo and competition.
      */
-    public static final String SERVER_IP = "192.168.43.65";
+    public static final String SERVER_IP = "192.168.2.22";
     
     /**
      * Your team number.
@@ -120,7 +120,7 @@ public class Resources {
     /**
      * Difference in light intensity that signifies a line
      */
-    public static final double LIGHT_THRESHOLD = 0.1; //todo Test this value
+    public static final double LIGHT_THRESHOLD = 0.1;
     /**
      * The tile size in centimeters.
      */
@@ -129,12 +129,12 @@ public class Resources {
     /**
      * Distance that the launcher can shoot
      */
-    public static final double SHOOTING_DISTANCE = 4 * TILE_SIZE; //todo test
+    public static final double SHOOTING_DISTANCE = 4 * TILE_SIZE;
     
     /**
      * Uncertainty on the launcher
      */
-    public static final double SHOOTING_ERROR_ALLOWED = 10; //todo test
+    public static final double SHOOTING_ERROR_ALLOWED = 10;
     /**
      * filter values above 20 for light sensor
      */
@@ -150,20 +150,19 @@ public class Resources {
      */
     public static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
     
-    
-    public static final EV3MediumRegulatedMotor triggerMotor =
-            new EV3MediumRegulatedMotor(LocalEV3.get().getPort("C"));
+    /**
+     * Trigger motor for the launching brick.
+     */
+    public static final EV3MediumRegulatedMotor triggerMotor = new EV3MediumRegulatedMotor(LocalEV3.get().getPort("C"));
     /**
      * Left Launch motor.
      */
-    public static final EV3MediumRegulatedMotor ultraSonicMotor =
-            new EV3MediumRegulatedMotor(LocalEV3.get().getPort("B"));
+    public static final EV3MediumRegulatedMotor ultraSonicMotor = new EV3MediumRegulatedMotor(LocalEV3.get().getPort("B"));
     
     /**
      * The ultrasonic sensor.
      */
-    public static final EV3UltrasonicSensor US_SENSOR =
-            new EV3UltrasonicSensor(LocalEV3.get().getPort("S2"));
+    public static final EV3UltrasonicSensor US_SENSOR = new EV3UltrasonicSensor(LocalEV3.get().getPort("S2"));
     
     /**
      * The color sensor.
@@ -184,7 +183,7 @@ public class Resources {
     /**
      * Allowed distance for falling edge.
      */
-    public static final int distFallingEdge =35; //25;
+    public static final int distFallingEdge = 35; //25;
     
     /**
      * Allowed distance for falling edge calculations.
@@ -205,8 +204,7 @@ public class Resources {
      * Distance which the robot needs to be from centre of shooting point
      */
     public static final int RADIUS_TARGET_LOCATION = 130;
-
-//    public static final int greenTeam = 15;
+    
     
     /**
      * Container for the Wi-Fi parameters.
@@ -328,16 +326,20 @@ public class Resources {
      * @author Younes Boubekeur
      */
     public static class Region {
-        /** The lower left corner of the region. */
+        /**
+         * The lower left corner of the region.
+         */
         public Point ll;
         
-        /** The upper right corner of the region. */
+        /**
+         * The upper right corner of the region.
+         */
         public Point ur;
         
         /**
          * Constructs a Region.
          *
-         * @param lowerLeft the lower left corner of the region
+         * @param lowerLeft  the lower left corner of the region
          * @param upperRight the upper right corner of the region
          */
         public Region(Point lowerLeft, Point upperRight) {
@@ -349,14 +351,10 @@ public class Resources {
         /**
          * Helper constructor to make a Region directly from parameter names.
          *
-         * @param llX
-         *     the Wi-Fi parameter key representing the lower left corner of the region x coordinate
-         * @param llY
-         *     the Wi-Fi parameter key representing the lower left corner of the region y coordinate
-         * @param urX
-         *     the Wi-Fi parameter key representing the upper right corner of the region x coordinate
-         * @param urY
-         *     the Wi-Fi parameter key representing the upper right corner of the region y coordinate
+         * @param llX the Wi-Fi parameter key representing the lower left corner of the region x coordinate
+         * @param llY the Wi-Fi parameter key representing the lower left corner of the region y coordinate
+         * @param urX the Wi-Fi parameter key representing the upper right corner of the region x coordinate
+         * @param urY the Wi-Fi parameter key representing the upper right corner of the region y coordinate
          */
         public Region(String llX, String llY, String urX, String urY) {
             this(new Point(get(llX), get(llY)), new Point(get(urX), get(urY)));
@@ -365,7 +363,7 @@ public class Resources {
         /**
          * Validates coordinates.
          *
-         * @param lowerLeft the lower left corner of the region
+         * @param lowerLeft  the lower left corner of the region
          * @param upperRight the upper right corner of the region
          */
         private void validateCoordinates(Point lowerLeft, Point upperRight) {
@@ -386,10 +384,14 @@ public class Resources {
      * @author Younes Boubekeur
      */
     public static class Point {
-        /** The x coordinate. */
+        /**
+         * The x coordinate.
+         */
         public double x;
         
-        /** The y coordinate. */
+        /**
+         * The y coordinate.
+         */
         public double y;
         
         /**
@@ -407,5 +409,5 @@ public class Resources {
             return "(" + x + ", " + y + ")";
         }
         
-    }  
+    }
 }

@@ -1,7 +1,5 @@
 package ca.mcgill.ecse211;
 
-import lejos.hardware.Sound;
-
 import static ca.mcgill.ecse211.Resources.*;
 
 /**
@@ -24,9 +22,9 @@ public class Localization {
      * Performs falling edge localization
      */
     public static void fallingEdge() {
-        leftMotor.setSpeed(MOTOR_LOW);
-        rightMotor.setSpeed(MOTOR_LOW);
-        
+        leftMotor.setSpeed(225);
+        rightMotor.setSpeed(225);
+    
         double angle1;
         double angle2;
         double turnAngle;
@@ -34,30 +32,30 @@ public class Localization {
             leftMotor.backward();
             rightMotor.forward();
         }
-        
+    
         //Rotate to face away from the wall
         while (SensorsPoller.getCurrentDistance() < distFallingEdge + tolFallingEdge) {
             leftMotor.backward();
             rightMotor.forward();
         }
-        
+    
         //Rotate towards the wall
         while (SensorsPoller.getCurrentDistance() > distFallingEdge) {
             leftMotor.backward();
             rightMotor.forward();
         }
-        
+    
         leftMotor.stop(true);
         rightMotor.stop(false);
-        sleep(100);
-        //Record first ange
+        sleep(10);
+        //Record first angle
         angle1 = odometer.getXYT()[2];
-        
+    
         while (SensorsPoller.getCurrentDistance() < 75) {
             leftMotor.forward();
             rightMotor.backward();
         }
-        
+    
         //Rotate to face away from the wall
         while (SensorsPoller.getCurrentDistance() < distFallingEdge + tolFallingEdge) {
             leftMotor.forward();
@@ -73,6 +71,7 @@ public class Localization {
         leftMotor.stop(true);
         rightMotor.stop(false);
         //Record second angle
+        sleep(10);
         angle2 = odometer.getXYT()[2];
         
         double dTheta = 0;
@@ -80,18 +79,18 @@ public class Localization {
         //Case 1: The first angle is smaller than the second
         if (angle1 < angle2) {
             dTheta = 45 - (angle1 + angle2) / 2;
-            
+    
         }
         //Case 2: The first angle is greater than the second
         else if (angle1 > angle2) {
             dTheta = 225 - (angle1 + angle2) / 2;
         }
         turnAngle = dTheta + odometer.getXYT()[2];
-        
+    
         //Turn to 0 degrees
-        leftMotor.rotate(-Navigation.convertAngle(turnAngle)+20, true);
-        rightMotor.rotate(Navigation.convertAngle(turnAngle)-20, false);
-        
+        leftMotor.rotate(-Navigation.convertAngle(turnAngle) + 20, true);
+        rightMotor.rotate(Navigation.convertAngle(turnAngle) - 20, false);
+    
         odometer.setTheta(0);
 //        if (greenTeam == 15) {
 //            odometer.setXYT(0.0, 0.0, 270);
@@ -110,37 +109,43 @@ public class Localization {
         // Face origin
         odometer.setTheta(SensorsPoller.getCurrentAngle());
         Navigation.turnTo(turnAngle);
-        leftMotor.setSpeed(MOTOR_LOW);
-        rightMotor.setSpeed(MOTOR_LOW);
+        leftMotor.setSpeed(220);
+        rightMotor.setSpeed(220);
         while (true) {
-            
-            
+        
+        
             leftMotor.forward();
             rightMotor.forward();
             // Move backwards to put the rotation point on the line
             if (SensorsPoller.getCurrentLightIntensity() < 0.3) { // Compare to previous intensity
                 leftMotor.stop(true);
                 rightMotor.stop(false);
-                sleep(100);
+                sleep(10);
                 leftMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), true);
                 rightMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), false);
-                
+
 //                Sound.beep();
                 break;
             }
         }
-        
-        
+    
+    
     }
     
-    public static void centralizeAtPoint(double xCoord, double yCoord){
+    /**
+     * Performs light localization at a point. Travels and sets the odometer to that point.
+     *
+     * @param xCoord: x-coordinate to localize
+     * @param yCoord: y-coordinate to localize
+     */
+    public static void centralizeAtPoint(double xCoord, double yCoord) {
         int currLineDetected = 0;// Count how many lines we've detected this far.
         double currentX;
         double currentY;
         double angleX;
         double angleY;
-        leftMotor.setSpeed(120);
-        rightMotor.setSpeed(120);
+        leftMotor.setSpeed(250);
+        rightMotor.setSpeed(250);
         boolean onlyHitOnce = false;
         while (currLineDetected < 4) {
             // Rotate in place to find the next line.
@@ -151,7 +156,7 @@ public class Localization {
                 currLineDetected++;
                 onlyHitOnce = true;
             }
-            if(SensorsPoller.getIsLineHit()== false){
+            if (SensorsPoller.getIsLineHit() == false) {
                 onlyHitOnce = false;
             }
         }
@@ -169,7 +174,7 @@ public class Localization {
         
         odometer.setXYT(currentX + xCoord, currentY + yCoord, odometer.getXYT()[2]); // updates odo with current location compared to
         // origin
-        if(!(Math.abs(angleX) < 3 && Math.abs(angleY )< 3)) {
+        if (!(Math.abs(angleX) < 3 && Math.abs(angleY) < 3)) {
             Navigation.travelTo(xCoord, yCoord); // make it travel to origin
         }
         
@@ -181,15 +186,16 @@ public class Localization {
 //        }
         
         Navigation.turnTo(WifiParser.getLocalizeStartingPoint()[2]);
-       
+        
         System.out.println("current angle is " + SensorsPoller.getCurrentAngle());
         odometer.setXYT(xCoord, yCoord, SensorsPoller.getCurrentAngle());
-
-    
+        
+        
     }
     
     /**
-     * cleaner way of sleeping threads
+     * Cleaner way of sleeping threads
+     *
      * @param timeMs: time wished to sleep
      */
     private static void sleep(int timeMs) {
