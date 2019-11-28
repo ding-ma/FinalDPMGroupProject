@@ -3,8 +3,6 @@ package ca.mcgill.ecse211;
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
 
-import java.util.Arrays;
-
 import static ca.mcgill.ecse211.Resources.*;
 
 /**
@@ -14,9 +12,7 @@ public class Main implements Runnable {
     public static void main(String[] args) {
         int buttonChoice;
         do {
-            /*
-             * do the pre processing here
-             */
+    
             // Clear the display
             LCD.clear();
             // Prompt the user for travel and shoot, and just shoot
@@ -41,7 +37,7 @@ public class Main implements Runnable {
     /**
      * Cleaner way of sleeping threads
      *
-     * @param timeMs: time wished to sleep
+     * @param timeMs time wished to sleep
      */
     private static void sleep(int timeMs) {
         try {
@@ -53,39 +49,27 @@ public class Main implements Runnable {
     
     @Override
     public void run() {
-        
         int[] startingPoint = WifiParser.getLocalizeStartingPoint();
-        System.out.println("Starting Point are " + Arrays.toString(startingPoint));
-        
         double[] tunnelPoints = WifiParser.tunnelLocalizationPoints();
-        System.out.println("Tunnels points are " + Arrays.toString(tunnelPoints));
         
         Localization.fallingEdge(); // US localization
         SensorsPoller.resetGyro(startingPoint[2]); // reset gyro to localization point angle
-        System.out.println("angle is " + startingPoint[2]);
-        
-        System.out.println(Arrays.toString(odometer.getXYT()));
-        
         Localization.travelUntilLineHit(startingPoint[2] + 45);
-        
         Localization.centralizeAtPoint(startingPoint[0] * TILE_SIZE, startingPoint[1] * TILE_SIZE);
-        
-        System.out.println(Arrays.toString(odometer.getXYT()));
+
         
         for (int i = 0; i < 3; i++) { // 3 sequence of beeps after localizing
             Sound.beep();
         }
         
-        
         // Moves to entrance of tunnel
         TunnelNavigation.entranceOfTunnel(tunnelPoints);
-        System.out.println(WifiParser.isTunnelVertical());
+    
         // Goes through tunnel and localizes at nearest point
         TunnelNavigation.goThroughTunnel(tunnelPoints);
         
         // If we want to shoot
-        //  TunnelNavigation.shootingPoint();
-        
+        TunnelNavigation.shootingPoint();
         
         // If we don't want to shoot
         
@@ -93,8 +77,6 @@ public class Main implements Runnable {
         //.............. going back home.........................//
         
         // swap entry and exit values and change approach angle value
-        
-        System.out.println("Before Swap" + Arrays.toString(tunnelPoints));
         
         switch ((int) tunnelPoints[4]) {
             
@@ -119,17 +101,12 @@ public class Main implements Runnable {
                 tunnelPoints[4] = 0;
             
         }
-        System.out.println("After Swap" + Arrays.toString(tunnelPoints));
         
         // Moves to entrance of tunnel
         TunnelNavigation.entranceOfTunnel(tunnelPoints);
-        
         Localization.centralizeAtPoint(tunnelPoints[0] * TILE_SIZE, tunnelPoints[1] * TILE_SIZE); //these are swapped
-        
         TunnelNavigation.goThroughTunnel(tunnelPoints); // Goes through tunnel and localizes at nearest point
-        
         sleep(100);
-        
         Navigation.travelTo(startingPoint[0], startingPoint[1]);
         
         for (int i = 0; i < 5; i++) { // 5 sequence of beeps to indicate return to starting area

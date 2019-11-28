@@ -289,8 +289,8 @@ public class WifiParser {
     /**
      * Checks if the giving localization point is in the water.
      *
-     * @param x: X-coordinate localization
-     * @param y: Y-coordinate localization
+     * @param x X-coordinate localization
+     * @param y Y-coordinate localization
      * @return: true if it is in water, false otherwise.
      */
     public static boolean checkIfPointIsInWater(double x, double y) {

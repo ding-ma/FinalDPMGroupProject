@@ -205,7 +205,6 @@ public class Resources {
      */
     public static final int RADIUS_TARGET_LOCATION = 130;
     
-    
     /**
      * Container for the Wi-Fi parameters.
      */

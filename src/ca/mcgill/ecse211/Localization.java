@@ -11,7 +11,7 @@ public class Localization {
     /**
      * returns the current location of the ultrasonic sensor
      *
-     * @param angle: difference between angle on one line
+     * @param angle difference between angle on one line
      * @return: coordinate location (x or y)
      */
     public static double currentLocation(double angle) {
@@ -92,18 +92,12 @@ public class Localization {
         rightMotor.rotate(Navigation.convertAngle(turnAngle) - 20, false);
     
         odometer.setTheta(0);
-//        if (greenTeam == 15) {
-//            odometer.setXYT(0.0, 0.0, 270);
-//        }
-//        else {
-//            odometer.setXYT(0.0,0.0, 90);
-//        }        
     }
     
     /**
      * travel until line is hit, for localization
      *
-     * @param turnAngle: angle which we want to turn the robot
+     * @param turnAngle angle which we want to turn the robot
      */
     public static void travelUntilLineHit(int turnAngle) {
         // Face origin
@@ -135,8 +129,8 @@ public class Localization {
     /**
      * Performs light localization at a point. Travels and sets the odometer to that point.
      *
-     * @param xCoord: x-coordinate to localize
-     * @param yCoord: y-coordinate to localize
+     * @param xCoord x-coordinate to localize
+     * @param yCoord y-coordinate to localize
      */
     public static void centralizeAtPoint(double xCoord, double yCoord) {
         int currLineDetected = 0;// Count how many lines we've detected this far.
@@ -178,13 +172,6 @@ public class Localization {
             Navigation.travelTo(xCoord, yCoord); // make it travel to origin
         }
         
-        
-        // Turn to face 0 degrees
-        double currAngle = odometer.getXYT()[2];
-//        if (currAngle <= 360 && currAngle >= 2.0) {
-//            Navigation.turnTo(-20); // robot always under turns to right
-//        }
-        
         Navigation.turnTo(WifiParser.getLocalizeStartingPoint()[2]);
         
         System.out.println("current angle is " + SensorsPoller.getCurrentAngle());
@@ -196,7 +183,7 @@ public class Localization {
     /**
      * Cleaner way of sleeping threads
      *
-     * @param timeMs: time wished to sleep
+     * @param timeMs time wished to sleep
      */
     private static void sleep(int timeMs) {
         try {

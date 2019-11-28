@@ -14,7 +14,7 @@ public class Navigation {
      * Converts input distance to the total rotation of each wheel needed to cover
      * that distance.
      *
-     * @param distance: distance needed to travel based on wheel radius
+     * @param distance distance needed to travel based on wheel radius
      * @return the wheel rotations necessary to cover the distance
      */
     public static int convertDistance(double distance) {
@@ -25,7 +25,7 @@ public class Navigation {
      * Converts input angle to the total rotation of each wheel needed to rotate the
      * robot by that angle.
      *
-     * @param angle: angle to rotate
+     * @param angle angle to rotate
      * @return the wheel rotations necessary to rotate the robot by the angle
      */
     public static int convertAngle(double angle) {
@@ -87,8 +87,8 @@ public class Navigation {
     /**
      * Travel towards the destination specified in the wayPoint.
      *
-     * @param x: the x coordinate of the final destination
-     * @param y: the y coordinate of the final destination
+     * @param x the x coordinate of the final destination
+     * @param y the y coordinate of the final destination
      */
     public static void travelTo(double x, double y) {
         
@@ -128,22 +128,19 @@ public class Navigation {
         rightMotor.setSpeed(FORWARD_SPEED+5);
         
         double distToTravel = euclideanDistance(currentX, currentY, x, y);
-        //    System.out.println(distToTravel);
         rightMotor.rotate(convertDistance(distToTravel), true);
         leftMotor.rotate(convertDistance(distToTravel), false);
-//        Sound.beep();
-
 }
-
+    
     
     /**
      * This method will return the euclidean distance of the robot with respect to the current destination
      *
-     * @param curX  :current X coordinate
-     * @param curY  : current Y coordinate
-     * @param targX :target X coordinate
-     * @param targY : target Y coordinate
-     * @return double error : euclidean error
+     * @param curX  current X coordinate
+     * @param curY  current Y coordinate
+     * @param targX target X coordinate
+     * @param targY target Y coordinate
+     * @return euclidean distance
      */
     public static double euclideanDistance(double curX, double curY, double targX, double targY) {
         return Math.sqrt(Math.pow((curX - targX), 2) + Math.pow((curY - targY), 2));
@@ -152,8 +149,8 @@ public class Navigation {
     /**
      * Turns robot head towards a X,Y location
      *
-     * @param x: Target x to turn to
-     * @param y: Target Y to turn to
+     * @param x Target x to turn to
+     * @param y Target Y to turn to
      */
     public static void turnToXY(double x, double y) {
         //Get initial coordinates
@@ -188,10 +185,11 @@ public class Navigation {
         
         turnTo(Math.toDegrees(currentTheta)); // Turn the robot towards the destination
     }
+    
     /**
      * Rotate the vehicle towards the desired angle
      *
-     * @param theta: angle wanted to rotate to
+     * @param theta angle wanted to rotate to
      */
     public static void turnTo(double theta) {
         double dTheta = getAngle(theta);
@@ -204,9 +202,9 @@ public class Navigation {
     }
     
     /**
-     * minimizes the turn to [-180.180]
+     * Minimizes the turn to [-180.180]
      *
-     * @param theta: the desired angle
+     * @param theta the desired angle
      * @return the angle of rotation to face the desired angle with the minimum
      */
     public static double getAngle(double theta) {

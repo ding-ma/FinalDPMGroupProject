@@ -10,74 +10,63 @@ import static ca.mcgill.ecse211.Resources.*;
  */
 public class TunnelNavigation {
     
-    static int[] localizeParams = WifiParser.getLocalizeStartingPoint();
-    
     /**
      * Travels to the entrance of the tunnel
      */
-    public static void entranceOfTunnel(double[] tunnellocations) {
-        double currentX = odometer.getXYT()[0];
-        double currentY = odometer.getXYT()[1];
-        
-        
-        // Moves to centre of 1 block before entrance of tunnel and turns toward tunnel
-        Navigation.travelTo(tunnellocations[0] * TILE_SIZE, tunnellocations[1] * TILE_SIZE);
-        Localization.centralizeAtPoint(tunnellocations[0] * TILE_SIZE, tunnellocations[1] * TILE_SIZE);
-        Navigation.turnTo(tunnellocations[4]);
-        
-    }
+    public static void entranceOfTunnel(double[] tunnelLocations) {
     
+        // Moves to centre of 1 block before entrance of tunnel and turns toward tunnel
+        Navigation.travelTo(tunnelLocations[0] * TILE_SIZE, tunnelLocations[1] * TILE_SIZE);
+        Localization.centralizeAtPoint(tunnelLocations[0] * TILE_SIZE, tunnelLocations[1] * TILE_SIZE);
+        Navigation.turnTo(tunnelLocations[4]);
+    
+    }
     
     /**
      * Travelling through tunnel with the help of the sweaping sensor
      */
-    public static void goThroughTunnel(double[] tunnellocations) {
-        /*
-         * sweep sensor, and get the angle of the sensor. if something is found, dodge accordingly
-         */
-        double currentX = odometer.getXYT()[0];
-        double currentY = odometer.getXYT()[1];
+    public static void goThroughTunnel(double[] tunnelLocations) {
         
-        leftMotor.setSpeed(100); // move slowly to make the turns
-        rightMotor.setSpeed(100);
+        leftMotor.setSpeed(ROTATE_SPEED); // move slowly to make the turns
+        rightMotor.setSpeed(ROTATE_SPEED);
         int angleA = 0;
         int angleB = 0;
         
-        if (tunnellocations[4] == 0 && tunnellocations[0] > WifiParser.ourTunnel.ll.x) { // applies for corner 0,1 vertical
+        if (tunnelLocations[4] == 0 && tunnelLocations[0] > WifiParser.ourTunnel.ll.x) { // applies for corner 0,1 vertical
             // tunnel
             // turn 270, move half a tile, turn to 0 and move .75 a tile
             angleA = 270;
             angleB = 0;
         } else {
             // turn 90, move half a tile, turn to 0, move .75 a tile
-            if (tunnellocations[4] == 0) {
+            if (tunnelLocations[4] == 0) {
                 angleA = 90;
                 angleB = 0;
             }
         }
         
-        if (tunnellocations[4] == 90 && tunnellocations[1] > WifiParser.ourTunnel.ll.y) { // applies for corner 0,3
+        if (tunnelLocations[4] == 90 && tunnelLocations[1] > WifiParser.ourTunnel.ll.y) { // applies for corner 0,3
             // horizontal tunnel
             // turn to 180, move half a tile, turn to 90, move .75 a tile
             angleA = 180;
             angleB = 90;
             
         } else {
-            if (tunnellocations[4] == 90) {
+            if (tunnelLocations[4] == 90) {
                 // turn to 0, move half a tile, turn to 90, move .75 a tile
                 angleA = 0;
                 angleB = 90;
             }
         }
         
-        if (tunnellocations[4] == 180 && tunnellocations[0] < WifiParser.ourTunnel.ur.x) { // applies for corner 2,3
+        if (tunnelLocations[4] == 180 && tunnelLocations[0] < WifiParser.ourTunnel.ur.x) { // applies for corner 2,3
             // vertical tunnel
             // turn to 90, move half a tile, turn 180, move .75 a tile
             angleA = 90;
             angleB = 180;
             
         } else {
-            if (tunnellocations[4] == 180) {
+            if (tunnelLocations[4] == 180) {
                 
                 // turn to 270, move half a tile, turn 180, move .75 a tile
                 angleA = 270;
@@ -85,26 +74,23 @@ public class TunnelNavigation {
             }
         }
         
-        if (tunnellocations[4] == 270 && tunnellocations[1] < WifiParser.ourTunnel.ur.y) { // applies for corner 1,2
+        if (tunnelLocations[4] == 270 && tunnelLocations[1] < WifiParser.ourTunnel.ur.y) { // applies for corner 1,2
             // horizontal tunnel
             // turn to 0, move half a tile, turn 270, move .75 a tile
             angleA = 0;
             angleB = 270;
         } else {
             // turn to 180, move half a tile, turn 270, move .75 a tile
-            if (tunnellocations[4] == 270) {
+            if (tunnelLocations[4] == 270) {
                 
                 angleA = 180;
                 angleB = 270;
             }
         }
         
-        System.out.println("A" + angleA);
-        System.out.println("B" + angleB);
-        
         Navigation.turnTo(angleA); // angle to turn based on your orientation
-        leftMotor.setSpeed(250);
-        rightMotor.setSpeed(250);
+        leftMotor.setSpeed(FORWARD_SPEED);
+        rightMotor.setSpeed(FORWARD_SPEED);
         leftMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), true);
         rightMotor.rotate(Navigation.convertDistance(0.5 * Resources.TILE_SIZE), false);
         Navigation.turnTo(angleB);
@@ -114,8 +100,8 @@ public class TunnelNavigation {
         
         leftMotor.stop(true);
         rightMotor.stop(false);
-        leftMotor.setSpeed(200); // we might need to go fast through the tunnel to decrease drift over distance.
-        rightMotor.setSpeed(200);
+        leftMotor.setSpeed(FORWARD_SPEED); // we might need to go fast through the tunnel to decrease drift over distance.
+        rightMotor.setSpeed(FORWARD_SPEED);
         
         ultraSonicMotor.rotate(-60);
         ultraSonicMotor.rotate(120);
@@ -124,8 +110,8 @@ public class TunnelNavigation {
         
         double[] distTheta = new double[2];
         
-        leftMotor.setSpeed(150);
-        rightMotor.setSpeed(150);
+        leftMotor.setSpeed(ROTATE_SPEED);
+        rightMotor.setSpeed(ROTATE_SPEED);
         
         while (true) { // we MUST make sure our head is in the tunnel before getting here.
             leftMotor.rotate(Navigation.convertDistance(0.25 * Resources.TILE_SIZE), true); // always drive forward half a
@@ -135,15 +121,10 @@ public class TunnelNavigation {
             leftMotor.stop(true);
             rightMotor.stop();
             
-            ultraSonicMotor.rotate(120); // distance taken at right
-            
+            ultraSonicMotor.rotate(ROTATE_SPEED); // distance taken at right
             distTheta[0] = SensorsPoller.getCurrentDistance();
-            System.out.println("right:" + distTheta[0]);
-            
             ultraSonicMotor.rotate(-120); // distance taken at the left
-            
             distTheta[1] = SensorsPoller.getCurrentDistance();
-            System.out.println("left:" + distTheta[1]);
             
             if (distTheta[0] > 40 && distTheta[1] > 40) { // base case
                 leftMotor.rotate(Navigation.convertDistance(.8 * Resources.TILE_SIZE), true); // accounts for light sensor
@@ -175,9 +156,9 @@ public class TunnelNavigation {
         leftMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), true);
         rightMotor.rotate(Navigation.convertDistance(-SENSOR_LOCATION), false);
         
-        Navigation.travelTo(tunnellocations[2] * TILE_SIZE, tunnellocations[3] * TILE_SIZE);
+        Navigation.travelTo(tunnelLocations[2] * TILE_SIZE, tunnelLocations[3] * TILE_SIZE);
         
-        Localization.centralizeAtPoint(tunnellocations[2] * TILE_SIZE, tunnellocations[3] * TILE_SIZE);
+        Localization.centralizeAtPoint(tunnelLocations[2] * TILE_SIZE, tunnelLocations[3] * TILE_SIZE);
     }
     
     /**
@@ -192,8 +173,6 @@ public class TunnelNavigation {
         }
         
         Navigation.turnToXY(ourBin.x, ourBin.y);
-//    Sound.beep();
-        
         double[] currLocation = odometer.getXYT();
         
         if (Navigation.euclideanDistance(currLocation[0], currLocation[1], ourBin.x, ourBin.y) < SHOOTING_DISTANCE) {

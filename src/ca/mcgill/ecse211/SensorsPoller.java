@@ -16,7 +16,6 @@ public class SensorsPoller implements Runnable {
     private float[] lightData = new float[COLOR_SENSOR.sampleSize()];
     private float[] previousLight = new float[COLOR_SENSOR.sampleSize()];
     
-    
     private static double currentAngle =0;
     private static int currentDistance;
     private static double currentLightIntensity;
@@ -29,7 +28,7 @@ public class SensorsPoller implements Runnable {
     /**
      * Resets the gyroscope to 0
      *
-     * @param offset: Adding offset in order to compensate the reset
+     * @param offset Adding offset in order to compensate the reset
      */
     public static void resetGyro(double offset) {
         GYRO_SENSOR.reset();
@@ -66,7 +65,7 @@ public class SensorsPoller implements Runnable {
     /**
      * Current light Intensity
      *
-     * @param lightIntensity: Brightness reading from light sensor
+     * @param lightIntensity Brightness reading from light sensor
      */
     private void setCurrentLightIntensity(double lightIntensity) {
         currentLightIntensity = lightIntensity;
@@ -84,7 +83,7 @@ public class SensorsPoller implements Runnable {
     /**
      * Previous light intensity
      *
-     * @param prevLightIntensity: Brightness reading from light sensor
+     * @param prevLightIntensity Brightness reading from light sensor
      */
     private void setPreviousLightIntensity(double prevLightIntensity) {
         previousLightIntensity = prevLightIntensity;
@@ -114,9 +113,7 @@ public class SensorsPoller implements Runnable {
             COLOR_SENSOR.getMode("Red").fetchSample(previousLight, 0);
             
             setCurrentLightIntensity(previousLight[0]);
-            
             setIsLineHit(getCurrentLightIntensity(), getPreviousLightIntensity());
-//    System.out.println(getCurrentAngle());
             try {
                 Thread.sleep(75);
             } catch (InterruptedException e) {
@@ -128,7 +125,8 @@ public class SensorsPoller implements Runnable {
     
     /**
      * Set Gyroscope Angle
-     * @param angle: Gyroscope Angle reading
+     *
+     * @param angle Gyroscope Angle reading
      */
     private void setGyroData(double angle){
         double temp = angle% 359;
@@ -139,7 +137,7 @@ public class SensorsPoller implements Runnable {
     
     /**
      * Set Ultrasonic distance
-     * @param distance: US distance reading
+     * @param distance US distance reading
      */
     private void setUsData(int distance){
         if(distance > 100)
@@ -150,8 +148,8 @@ public class SensorsPoller implements Runnable {
     /**
      * Using differential, check if the line was a black line
      *
-     * @param currentLightIntensity:  Current light Intensity
-     * @param previousLightIntensity: Previous light intensity
+     * @param currentLightIntensity  Current light Intensity
+     * @param previousLightIntensity Previous light intensity
      */
     private void setIsLineHit(double currentLightIntensity, double previousLightIntensity){
         double diffValue = currentLightIntensity - previousLightIntensity;
@@ -161,7 +159,6 @@ public class SensorsPoller implements Runnable {
             isLineHit = true;
         }
         setPreviousLightIntensity(currentLightIntensity);
-        
     }
     
 }
